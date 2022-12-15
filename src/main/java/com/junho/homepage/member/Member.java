@@ -1,6 +1,6 @@
 package com.junho.homepage.member;
 
-import com.junho.homepage.config.support.BaseEntity;
+import com.junho.config.support.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

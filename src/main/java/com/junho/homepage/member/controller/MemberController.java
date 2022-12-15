@@ -1,8 +1,8 @@
 package com.junho.homepage.member.controller;
 
-import com.junho.homepage.annotation.RoleAdmin;
-import com.junho.homepage.annotation.RoleManager;
-import com.junho.homepage.annotation.RoleUser;
+import com.junho.annotation.RoleAdmin;
+import com.junho.annotation.RoleManager;
+import com.junho.annotation.RoleUser;
 import com.junho.homepage.member.dto.MemberResponse;
 import com.junho.homepage.member.service.MemberService;
 import lombok.RequiredArgsConstructor;

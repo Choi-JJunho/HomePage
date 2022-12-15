@@ -1,8 +1,8 @@
 package com.junho.homepage.member.service;
 
-import com.junho.homepage.config.security.JwtProvider;
-import com.junho.homepage.config.support.error.ErrorCode;
-import com.junho.homepage.config.support.exception.ApiException;
+import com.junho.config.security.JwtProvider;
+import com.junho.config.support.error.ErrorCode;
+import com.junho.config.support.exception.ApiException;
 import com.junho.homepage.member.Authority;
 import com.junho.homepage.member.Member;
 import com.junho.homepage.member.RedisMember;
@@ -25,9 +25,9 @@ import java.util.Collections;
 public class MemberService {
 
     private static final String tokenWhiteList = "tokenWhiteList";
+    private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
     private final RedisMemberRepository redisMemberRepository;
-    private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
 
     public TokenResponse login(MemberRequest request) {

@@ -25,9 +25,6 @@ public class MemberResponse {
     @ApiModelProperty(notes = "닉네임", example = "주노")
     private String nickname;
 
-    @ApiModelProperty(notes = "익명 닉네임", example = "익명_1522771686642")
-    private String anonymous_nickname;
-
     @ApiModelProperty(notes = "이름", example = "최준호")
     private String name;
 
