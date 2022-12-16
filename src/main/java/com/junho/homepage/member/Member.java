@@ -1,6 +1,5 @@
 package com.junho.homepage.member;
 
-import com.junho.config.support.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,14 +23,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "mbr")
-public class Member extends BaseEntity {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mbr_id")
     private Long id;
 
-    @Column(name = "acnt",unique = true)
+    @Column(name = "acnt", unique = true)
     private String account;
 
     @Column(name = "pwrd")
@@ -48,6 +47,9 @@ public class Member extends BaseEntity {
 
     @Column(name = "rfsh_tkn")
     private String refreshToken;
+
+    @Column(name = "enbl_yn")
+    private boolean enabled = true;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Builder.Default

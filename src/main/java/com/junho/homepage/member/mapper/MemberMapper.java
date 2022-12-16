@@ -1,8 +1,8 @@
 package com.junho.homepage.member.mapper;
 
 import com.junho.homepage.member.Member;
-import com.junho.homepage.member.dto.SignUpRequest;
 import com.junho.homepage.member.dto.MemberResponse;
+import com.junho.homepage.member.dto.SignUpRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -18,7 +18,6 @@ public interface MemberMapper {
 
     MemberMapper INSTANCE = Mappers.getMapper(MemberMapper.class);
 
-    @Mapping(target = "refreshToken", ignore = true)
     MemberResponse toMemberResponse(Member entity);
 
     @Mapping(target = "refreshToken", ignore = true)

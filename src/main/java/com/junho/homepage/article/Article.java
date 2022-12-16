@@ -1,6 +1,7 @@
 package com.junho.homepage.article;
 
 import com.junho.config.support.BaseEntity;
+import com.junho.homepage.article.dto.ArticleRequest;
 import com.junho.homepage.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +31,7 @@ public class Article extends BaseEntity {
     @Column(name = "atcl_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mbr_id")
     private Member member;
 
@@ -40,4 +41,8 @@ public class Article extends BaseEntity {
     @Column(name = "atcl_cn")
     private String description;
 
+    public void update(ArticleRequest request) {
+        this.title = request.getTitle();
+        this.description = request.getDescription();
+    }
 }

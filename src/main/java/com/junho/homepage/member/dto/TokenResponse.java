@@ -1,8 +1,10 @@
 package com.junho.homepage.member.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TokenResponse {
 
     private final String accessToken;

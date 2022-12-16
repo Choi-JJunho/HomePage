@@ -10,9 +10,11 @@ import com.junho.homepage.article.repository.ArticleRepository;
 import com.junho.homepage.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
@@ -27,5 +29,15 @@ public class ArticleService {
         Article article = ArticleMapper.INSTANCE.toArticle(request, writer);
         articleRepository.save(article);
         return ArticleMapper.INSTANCE.toArticleResponse(article);
+    }
+
+    public ArticleResponse updateArticle(Article article, ArticleRequest request) {
+        article.update(request);
+        return ArticleMapper.INSTANCE.toArticleResponse(article);
+    }
+
+    public boolean deleteArticle(Article article, Member currentMember) {
+        articleRepository.deleteById(article.getId());
+        return true;
     }
 }
