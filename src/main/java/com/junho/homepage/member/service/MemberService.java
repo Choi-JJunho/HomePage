@@ -5,13 +5,13 @@ import com.junho.config.support.error.ErrorCode;
 import com.junho.config.support.exception.ApiException;
 import com.junho.homepage.member.Authority;
 import com.junho.homepage.member.Member;
-import com.junho.homepage.member.RedisMember;
-import com.junho.homepage.member.dto.MemberRequest;
+import com.junho.config.security.token.AccessToken;
+import com.junho.homepage.member.dto.SignUpRequest;
 import com.junho.homepage.member.dto.MemberResponse;
 import com.junho.homepage.member.dto.TokenResponse;
 import com.junho.homepage.member.mapper.MemberMapper;
 import com.junho.homepage.member.repository.MemberRepository;
-import com.junho.homepage.member.repository.RedisMemberRepository;
+import com.junho.config.security.token.AccessTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,10 +27,10 @@ public class MemberService {
     private static final String tokenWhiteList = "tokenWhiteList";
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
-    private final RedisMemberRepository redisMemberRepository;
+    private final AccessTokenRepository accessTokenRepository;
     private final JwtProvider jwtProvider;
 
-    public TokenResponse login(MemberRequest request) {
+    public TokenResponse login(SignUpRequest request) {
         // 아이디 검증
         Member member = memberRepository.findByAccount(request.getAccount())
                 .orElseThrow(() -> new ApiException(ErrorCode.INVALID_LOGIN_INFO));
@@ -40,13 +40,13 @@ public class MemberService {
             throw new ApiException(ErrorCode.INVALID_LOGIN_INFO);
         }
 
-        String token = jwtProvider.createToken(member.getAccount(), member.getRoles());
-        RedisMember save = redisMemberRepository.save(RedisMember.of(member.getAccount(), token));
-        return TokenResponse.from(token);
+        String accessToken = jwtProvider.createAccessToken(member.getAccount(), member.getRoles());
+        accessTokenRepository.save(AccessToken.of(member.getAccount(), accessToken));
+        return TokenResponse.of(accessToken, member.getRefreshToken());
 
     }
 
-    public boolean register(MemberRequest request) {
+    public boolean register(SignUpRequest request) {
         try {
             Member member = MemberMapper.INSTANCE.toMemberEntity(request);
             // TODO : 권한 구분해서 부여할 수 있도록 고려하기
@@ -60,7 +60,7 @@ public class MemberService {
     }
 
     public boolean logout(String account) {
-        redisMemberRepository.deleteById(account);
+        accessTokenRepository.deleteById(account);
         return true;
     }
 

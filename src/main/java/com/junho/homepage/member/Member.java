@@ -43,8 +43,11 @@ public class Member extends BaseEntity {
     @Column(name = "nm")
     private String name;
 
-    @Column(name = "eml",unique = true)
+    @Column(name = "eml", unique = true)
     private String email;
+
+    @Column(name = "rfsh_tkn")
+    private String refreshToken;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Builder.Default

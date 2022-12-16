@@ -1,4 +1,4 @@
-package com.junho.homepage.member;
+package com.junho.config.security.token;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,15 +11,15 @@ import org.springframework.data.redis.core.RedisHash;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@RedisHash("member")
-public class RedisMember {
+@RedisHash(value = "accessToken", timeToLive = 60 * 60 * 60L) // Access Token TTL 1Hour
+public class AccessToken {
 
     @Id
     String id;
     String token;
 
-    public static RedisMember of(String account, String token) {
-        return RedisMember.builder()
+    public static AccessToken of(String account, String token) {
+        return AccessToken.builder()
                 .id(account)
                 .token(token)
                 .build();

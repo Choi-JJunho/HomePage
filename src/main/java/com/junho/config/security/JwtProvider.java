@@ -1,9 +1,9 @@
 package com.junho.config.security;
 
+import com.junho.config.security.token.AccessTokenRepository;
 import com.junho.config.support.error.ErrorCode;
 import com.junho.config.support.exception.TokenExpiredException;
 import com.junho.homepage.member.Authority;
-import com.junho.homepage.member.repository.RedisMemberRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -30,10 +30,11 @@ import java.util.List;
 public class JwtProvider {
 
     private final JpaUserDetailsService userDetailsService;
-    private final RedisMemberRepository redisMemberRepository;
+    private final AccessTokenRepository accessTokenRepository;
 
     // 만료시간 : 1Hour
-    private static final long EXPIRE_TIME = 1000L * 60 * 60;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000L * 60 * 60;
+
     // Bearer 검증
     private static final String BEARER = "BEARER ";
 
@@ -46,14 +47,14 @@ public class JwtProvider {
         secretKey = Keys.hmacShaKeyFor(salt.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String createToken(String account, List<Authority> roles) {
+    public String createAccessToken(String account, List<Authority> roles) {
         Claims claims = Jwts.claims().setSubject(account);
         claims.put("roles", roles);
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + EXPIRE_TIME))
+                .setExpiration(new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_TIME))
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -82,8 +83,10 @@ public class JwtProvider {
                     .build()
                     .parseClaimsJws(refined);
 
-            return !claims.getBody().getExpiration().before(new Date())
-                    && isExpireByRedis(claims.getBody().getSubject());
+            String account = claims.getBody().getSubject();
+            boolean expired = claims.getBody().getExpiration().before(new Date());
+
+            return !expired && isExpireByRedis(account);
         } catch (ExpiredJwtException e) {
             throw new TokenExpiredException(ErrorCode.TOKEN_EXPIRED);
         } catch (Exception ignored) {
@@ -92,6 +95,6 @@ public class JwtProvider {
     }
 
     private boolean isExpireByRedis(String account) {
-        return redisMemberRepository.existsById(account);
+        return accessTokenRepository.existsById(account);
     }
 }

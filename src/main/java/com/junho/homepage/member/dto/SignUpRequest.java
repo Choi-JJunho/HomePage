@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberRequest {
+public class SignUpRequest {
 
     @ApiModelProperty(notes = "고유 id", example = "10")
     private Long id;

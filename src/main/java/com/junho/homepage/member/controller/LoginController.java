@@ -1,6 +1,6 @@
 package com.junho.homepage.member.controller;
 
-import com.junho.homepage.member.dto.MemberRequest;
+import com.junho.homepage.member.dto.SignUpRequest;
 import com.junho.homepage.member.dto.TokenResponse;
 import com.junho.homepage.member.service.MemberService;
 import io.swagger.annotations.ApiOperation;
@@ -21,20 +21,27 @@ public class LoginController {
 
     @ApiOperation(value = "로그인", notes = "이메일 회원 로그인을 한다.")
     @PostMapping(value = "/signin")
-    public ResponseEntity<TokenResponse> signin(@RequestBody MemberRequest request) throws Exception {
+    public ResponseEntity<TokenResponse> signin(@RequestBody SignUpRequest request) throws Exception {
         return new ResponseEntity<>(memberService.login(request), HttpStatus.OK);
     }
 
     @ApiOperation(value = "회원가입", notes = "회원가입을 한다.")
     @PostMapping(value = "/signup")
-    public ResponseEntity<Boolean> signup(@RequestBody MemberRequest request) throws Exception {
+    public ResponseEntity<Boolean> signup(@RequestBody SignUpRequest request) throws Exception {
         return new ResponseEntity<>(memberService.register(request), HttpStatus.OK);
     }
 
     @ApiOperation(value = "로그아웃", notes = "Header에 담겨있는 Token을 기준으로 로그아웃을 수행한다.")
     @PostMapping(value = "/signout")
-    public ResponseEntity signout() throws Exception {
+    public ResponseEntity<Boolean> signout() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity(memberService.logout(authentication.getName()), HttpStatus.OK);
+        return new ResponseEntity<>(memberService.logout(authentication.getName()), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "토큰 재발급", notes = "refresh Token의 정보를 토대로 access 토큰 재발급")
+    @PostMapping(value = "/refresh")
+    public ResponseEntity<Boolean> refresh() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return new ResponseEntity<>(memberService.logout(authentication.getName()), HttpStatus.OK);
     }
 }

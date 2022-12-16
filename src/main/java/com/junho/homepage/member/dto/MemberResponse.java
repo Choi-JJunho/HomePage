@@ -1,5 +1,6 @@
 package com.junho.homepage.member.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.junho.homepage.member.Authority;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -7,13 +8,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class MemberResponse {
 
     @ApiModelProperty(notes = "고유 id", example = "10")
@@ -30,7 +31,7 @@ public class MemberResponse {
 
     @ApiModelProperty(notes = "이메일", example = "junho5336@gmail.com")
     private String email;
-    
+
     @ApiModelProperty(notes = "권한 목록", example = "ROLE_USER")
     private List<Authority> roles;
 }
