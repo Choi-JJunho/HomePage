@@ -13,16 +13,19 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "athy")
 public class Authority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
+    @Column(name = "athy_id")
     private Long id;
 
+    @Column(name = "nm")
     private String name;
 
-    @JoinColumn(name = "member")
+    @JoinColumn(name = "mbr_id")
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Member member;

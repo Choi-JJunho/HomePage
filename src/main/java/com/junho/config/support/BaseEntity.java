@@ -33,5 +33,6 @@ public class BaseEntity {
     @Column(name = "update_dt")
     private LocalDateTime updateDate;
 
+    @Column(name = "enbl_yn")
     private boolean enabled = true;
 }

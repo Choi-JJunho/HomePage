@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,22 +23,27 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "mbr")
 public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "mbr_id")
     private Long id;
 
-    @Column(unique = true)
+    @Column(name = "acnt",unique = true)
     private String account;
 
+    @Column(name = "pwrd")
     private String password;
 
+    @Column(name = "nck_nm")
     private String nickname;
 
+    @Column(name = "nm")
     private String name;
 
-    @Column(unique = true)
+    @Column(name = "eml",unique = true)
     private String email;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

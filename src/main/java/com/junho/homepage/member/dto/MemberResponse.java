@@ -30,6 +30,7 @@ public class MemberResponse {
 
     @ApiModelProperty(notes = "이메일", example = "junho5336@gmail.com")
     private String email;
-
-    private final List<Authority> roles = new ArrayList<>();
+    
+    @ApiModelProperty(notes = "권한 목록", example = "ROLE_USER")
+    private List<Authority> roles;
 }

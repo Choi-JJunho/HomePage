@@ -3,6 +3,7 @@ package com.junho.homepage.article.mapper;
 import com.junho.homepage.article.Article;
 import com.junho.homepage.article.dto.ArticleRequest;
 import com.junho.homepage.article.dto.ArticleResponse;
+import com.junho.homepage.member.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -19,7 +20,6 @@ public interface ArticleMapper {
     @Mapping(source = "member.id", target = "memberId")
     ArticleResponse toArticleResponse(Article entity);
 
-    @Mapping(target = "member", ignore = true)
     @Mapping(target = "id", ignore = true)
-    Article toArticle(ArticleRequest request);
+    Article toArticle(ArticleRequest request, Member member);
 }

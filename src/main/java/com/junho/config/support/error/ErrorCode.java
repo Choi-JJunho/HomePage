@@ -24,7 +24,7 @@ public enum ErrorCode {
     /* 게시물 관련 -200 ~ -299  */
     ARTICLE_NOT_EXIST(-200, HttpStatus.NOT_FOUND, "게시물을 찾을 수 없습니다.");
 
-    /* 00 서비스 관련 오류  -200 ~ -299*/
+    /* 00 서비스 관련 오류  -300 ~ -399*/
 
 
     private final int code;

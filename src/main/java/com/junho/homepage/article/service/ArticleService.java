@@ -7,6 +7,7 @@ import com.junho.homepage.article.dto.ArticleRequest;
 import com.junho.homepage.article.dto.ArticleResponse;
 import com.junho.homepage.article.mapper.ArticleMapper;
 import com.junho.homepage.article.repository.ArticleRepository;
+import com.junho.homepage.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,8 @@ public class ArticleService {
         return ArticleMapper.INSTANCE.toArticleResponse(article);
     }
 
-    public ArticleResponse postArticle(ArticleRequest request) {
-        Article article = ArticleMapper.INSTANCE.toArticle(request);
+    public ArticleResponse postArticle(ArticleRequest request, Member writer) {
+        Article article = ArticleMapper.INSTANCE.toArticle(request, writer);
         articleRepository.save(article);
         return ArticleMapper.INSTANCE.toArticleResponse(article);
     }
