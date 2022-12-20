@@ -22,7 +22,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "mbr")
+@Table(name = "member")
 public class Member {
 
     @Id
@@ -49,6 +49,7 @@ public class Member {
     private String refreshToken;
 
     @Column(name = "enbl_yn")
+    @Builder.Default
     private boolean enabled = true;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

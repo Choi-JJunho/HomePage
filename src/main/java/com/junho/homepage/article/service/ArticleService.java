@@ -9,6 +9,8 @@ import com.junho.homepage.article.mapper.ArticleMapper;
 import com.junho.homepage.article.repository.ArticleRepository;
 import com.junho.homepage.member.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,7 @@ public class ArticleService {
     public ArticleResponse getArticle(Long id) {
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.ARTICLE_NOT_EXIST));
+        article.increaseViewCount();
         return ArticleMapper.INSTANCE.toArticleResponse(article);
     }
 
@@ -39,5 +42,9 @@ public class ArticleService {
     public boolean deleteArticle(Article article, Member currentMember) {
         articleRepository.deleteById(article.getId());
         return true;
+    }
+
+    public Page<ArticleResponse> getArticles(String keyword, Pageable pageable) {
+        return articleRepository.findAll(keyword, pageable);
     }
 }

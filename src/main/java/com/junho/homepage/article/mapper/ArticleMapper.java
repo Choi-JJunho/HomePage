@@ -17,9 +17,11 @@ public interface ArticleMapper {
 
     ArticleMapper INSTANCE = Mappers.getMapper(ArticleMapper.class);
 
-    @Mapping(source = "member.id", target = "memberId")
+    @Mapping(source = "creator.id", target = "creatorId")
+    @Mapping(source = "modifier.id", target = "modifierId")
     ArticleResponse toArticleResponse(Article entity);
 
+    @Mapping(target = "hits", ignore = true)
     @Mapping(target = "id", ignore = true)
     Article toArticle(ArticleRequest request, Member member);
 }

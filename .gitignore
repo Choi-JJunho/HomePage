@@ -35,6 +35,8 @@ out/
 ### VS Code ###
 .vscode/
 
-
 ### Propreties ###
 application.yml
+
+### QueryDsl ###
+src/main/generated/

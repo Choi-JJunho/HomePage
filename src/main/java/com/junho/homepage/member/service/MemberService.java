@@ -1,17 +1,17 @@
 package com.junho.homepage.member.service;
 
 import com.junho.config.security.JwtProvider;
+import com.junho.config.security.token.AccessToken;
+import com.junho.config.security.token.AccessTokenRepository;
 import com.junho.config.support.error.ErrorCode;
 import com.junho.config.support.exception.ApiException;
 import com.junho.homepage.member.Authority;
 import com.junho.homepage.member.Member;
-import com.junho.config.security.token.AccessToken;
-import com.junho.homepage.member.dto.SignUpRequest;
 import com.junho.homepage.member.dto.MemberResponse;
+import com.junho.homepage.member.dto.SignUpRequest;
 import com.junho.homepage.member.dto.TokenResponse;
 import com.junho.homepage.member.mapper.MemberMapper;
 import com.junho.homepage.member.repository.MemberRepository;
-import com.junho.config.security.token.AccessTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class MemberService {
     private final AccessTokenRepository accessTokenRepository;
     private final JwtProvider jwtProvider;
 
-    public TokenResponse login(SignUpRequest request) {
+    public TokenResponse signIn(SignUpRequest request) {
         // 아이디 검증
         Member member = memberRepository.findByAccount(request.getAccount())
                 .orElseThrow(() -> new ApiException(ErrorCode.INVALID_LOGIN_INFO));
@@ -46,10 +46,9 @@ public class MemberService {
 
     }
 
-    public boolean register(SignUpRequest request) {
+    public boolean signUp(SignUpRequest request) {
         try {
             Member member = MemberMapper.INSTANCE.toMemberEntity(request);
-            // TODO : 권한 구분해서 부여할 수 있도록 고려하기
             member.setRoles(Collections.singletonList(Authority.builder().name("ROLE_MANAGER").build()));
 
             memberRepository.save(member);
@@ -59,7 +58,7 @@ public class MemberService {
         return true;
     }
 
-    public boolean logout(String account) {
+    public boolean signOut(String account) {
         accessTokenRepository.deleteById(account);
         return true;
     }
@@ -69,5 +68,11 @@ public class MemberService {
                 .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND));
 
         return MemberMapper.INSTANCE.toMemberResponse(member);
+    }
+
+    public TokenResponse refresh(String refreshToken) {
+
+
+        return null;
     }
 }

@@ -20,6 +20,7 @@ public interface MemberMapper {
 
     MemberResponse toMemberResponse(Member entity);
 
+    @Mapping(target = "enabled", ignore = true)
     @Mapping(target = "refreshToken", ignore = true)
     @Mapping(target = "roles", ignore = true)
     @Mapping(source = "password", target = "password", qualifiedByName = "encryptPassword")
