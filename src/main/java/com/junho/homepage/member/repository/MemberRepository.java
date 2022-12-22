@@ -1,6 +1,6 @@
 package com.junho.homepage.member.repository;
 
-import com.junho.homepage.member.Member;
+import com.junho.homepage.member.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 

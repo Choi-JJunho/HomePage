@@ -1,9 +1,9 @@
 package com.junho.config.security;
 
-import com.junho.config.support.error.ErrorCode;
-import com.junho.config.support.exception.AuthException;
-import com.junho.homepage.member.Member;
+import com.junho.homepage.member.domain.Member;
 import com.junho.homepage.member.repository.MemberRepository;
+import com.junho.support.error.ErrorCode;
+import com.junho.support.exception.AuthException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,9 +1,8 @@
 package com.junho.config.security;
 
-import com.junho.config.security.token.AccessTokenRepository;
-import com.junho.config.support.error.ErrorCode;
-import com.junho.config.support.exception.TokenExpiredException;
-import com.junho.homepage.member.Authority;
+import com.junho.homepage.member.domain.Authority;
+import com.junho.support.error.ErrorCode;
+import com.junho.support.exception.TokenExpiredException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -30,10 +29,10 @@ import java.util.List;
 public class JwtProvider {
 
     private final JpaUserDetailsService userDetailsService;
-    private final AccessTokenRepository accessTokenRepository;
 
     // 만료시간 : 1Hour
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000L * 60 * 60;
+    // TODO : Millisecond 시간을 Hour로 보기 편하게 선언하는 방식?
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000L * 60 * 60 * 60;
 
     // Bearer 검증
     private static final String BEARER = "BEARER ";
@@ -47,7 +46,7 @@ public class JwtProvider {
         secretKey = Keys.hmacShaKeyFor(salt.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String createAccessToken(String account, List<Authority> roles) {
+    public String createToken(String account, List<Authority> roles) {
         Claims claims = Jwts.claims().setSubject(account);
         claims.put("roles", roles);
         Date now = new Date();
@@ -65,7 +64,11 @@ public class JwtProvider {
     }
 
     public String getAccount(String token) {
-        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getSubject();
+        try {
+            return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getSubject();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims().getSubject();
+        }
     }
 
     public String resolveToken(HttpServletRequest request) {
@@ -82,19 +85,12 @@ public class JwtProvider {
                     .setSigningKey(secretKey)
                     .build()
                     .parseClaimsJws(refined);
-
-            String account = claims.getBody().getSubject();
             boolean expired = claims.getBody().getExpiration().before(new Date());
-
-            return !expired && isExpireByRedis(account);
+            return !expired;
         } catch (ExpiredJwtException e) {
             throw new TokenExpiredException(ErrorCode.TOKEN_EXPIRED);
         } catch (Exception ignored) {
             return false;
         }
-    }
-
-    private boolean isExpireByRedis(String account) {
-        return accessTokenRepository.existsById(account);
     }
 }

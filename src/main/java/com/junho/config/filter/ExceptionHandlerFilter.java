@@ -2,10 +2,10 @@ package com.junho.config.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.junho.config.support.error.ErrorCode;
-import com.junho.config.support.error.ErrorResponse;
-import com.junho.config.support.exception.AuthException;
-import com.junho.config.support.exception.TokenExpiredException;
+import com.junho.support.error.ErrorCode;
+import com.junho.support.error.ErrorResponse;
+import com.junho.support.exception.AuthException;
+import com.junho.support.exception.TokenExpiredException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;

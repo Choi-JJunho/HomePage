@@ -3,13 +3,12 @@ package com.junho.homepage.member.controller;
 import com.junho.annotation.RoleAdmin;
 import com.junho.annotation.RoleManager;
 import com.junho.annotation.RoleUser;
-import com.junho.homepage.member.dto.MemberResponse;
+import com.junho.homepage.member.dto.response.MemberResponse;
 import com.junho.homepage.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +19,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/user")
-    public ResponseEntity<MemberResponse> getUser(@RequestBody String account) {
+    public ResponseEntity<MemberResponse> getUser(@RequestParam String account) {
         return new ResponseEntity<>(memberService.getMember(account), HttpStatus.OK);
     }
 

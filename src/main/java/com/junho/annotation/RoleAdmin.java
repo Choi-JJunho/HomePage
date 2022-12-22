@@ -1,6 +1,7 @@
 package com.junho.annotation;
 
-import org.springframework.security.access.prepost.PreAuthorize;
+import com.junho.config.security.AuthorityType;
+import org.springframework.security.access.annotation.Secured;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,6 +10,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasRole('ADMIN')")
+@Secured(value = AuthorityType.ROLES.ADMIN)
 public @interface RoleAdmin {
 }

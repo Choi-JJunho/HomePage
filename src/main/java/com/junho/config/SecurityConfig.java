@@ -4,9 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.junho.config.filter.ExceptionHandlerFilter;
 import com.junho.config.filter.JwtAuthenticationFilter;
+import com.junho.config.security.AuthorityType;
 import com.junho.config.security.JwtProvider;
-import com.junho.config.support.error.ErrorCode;
-import com.junho.config.support.error.ErrorResponse;
+import com.junho.support.error.ErrorCode;
+import com.junho.support.error.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +29,7 @@ import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig {
 
     private final JwtProvider jwtProvider;
@@ -70,11 +71,11 @@ public class SecurityConfig {
                 )
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests()
+                .authorizeRequests().anyRequest().permitAll()
                 // TODO : 권한에 따른 접근 제한범위 설정
-                .antMatchers("/**").permitAll()
-                .antMatchers(swaggerPaths).permitAll()
-                .anyRequest().authenticated()
+//                .antMatchers("/**").permitAll()
+//                .antMatchers(swaggerPaths).permitAll()
+//                .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new ExceptionHandlerFilter(), JwtAuthenticationFilter.class)
@@ -113,8 +114,7 @@ public class SecurityConfig {
     @Bean
     public RoleHierarchy roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        //큰 권한 순서로 ' > ' 를 사용하여 입력해준다. 띄어쓰기도 중요하다.
-        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_MANAGER > ROLE_USER");
+        roleHierarchy.setHierarchy(AuthorityType.getHierarchy());
         return roleHierarchy;
     }
 

@@ -1,17 +1,20 @@
 package com.junho.homepage.member.service;
 
+import com.junho.config.security.AuthorityType;
 import com.junho.config.security.JwtProvider;
-import com.junho.config.security.token.AccessToken;
-import com.junho.config.security.token.AccessTokenRepository;
-import com.junho.config.support.error.ErrorCode;
-import com.junho.config.support.exception.ApiException;
-import com.junho.homepage.member.Authority;
-import com.junho.homepage.member.Member;
-import com.junho.homepage.member.dto.MemberResponse;
-import com.junho.homepage.member.dto.SignUpRequest;
-import com.junho.homepage.member.dto.TokenResponse;
+import com.junho.config.security.token.RefreshToken;
+import com.junho.config.security.token.RefreshTokenRepository;
+import com.junho.config.security.token.TokenResponse;
+import com.junho.homepage.member.domain.Authority;
+import com.junho.homepage.member.domain.Member;
+import com.junho.homepage.member.dto.request.SignInRequest;
+import com.junho.homepage.member.dto.request.SignUpRequest;
+import com.junho.homepage.member.dto.response.MemberResponse;
 import com.junho.homepage.member.mapper.MemberMapper;
 import com.junho.homepage.member.repository.MemberRepository;
+import com.junho.homepage.utils.AuthUtils;
+import com.junho.support.error.ErrorCode;
+import com.junho.support.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,10 +30,10 @@ public class MemberService {
     private static final String tokenWhiteList = "tokenWhiteList";
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
-    private final AccessTokenRepository accessTokenRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
     private final JwtProvider jwtProvider;
 
-    public TokenResponse signIn(SignUpRequest request) {
+    public TokenResponse signIn(SignInRequest request) {
         // 아이디 검증
         Member member = memberRepository.findByAccount(request.getAccount())
                 .orElseThrow(() -> new ApiException(ErrorCode.INVALID_LOGIN_INFO));
@@ -40,8 +43,9 @@ public class MemberService {
             throw new ApiException(ErrorCode.INVALID_LOGIN_INFO);
         }
 
-        String accessToken = jwtProvider.createAccessToken(member.getAccount(), member.getRoles());
-        accessTokenRepository.save(AccessToken.of(member.getAccount(), accessToken));
+        String accessToken = jwtProvider.createToken(member.getAccount(), member.getRoles());
+        refreshTokenRepository.save(RefreshToken.of(member.getAccount(), member.resetToken()));
+
         return TokenResponse.of(accessToken, member.getRefreshToken());
 
     }
@@ -49,7 +53,11 @@ public class MemberService {
     public boolean signUp(SignUpRequest request) {
         try {
             Member member = MemberMapper.INSTANCE.toMemberEntity(request);
-            member.setRoles(Collections.singletonList(Authority.builder().name("ROLE_MANAGER").build()));
+            member.setRoles(Collections.singletonList(
+                    Authority.builder()
+                            .name(AuthorityType.ROLES.USER)
+                            .build())
+            );
 
             memberRepository.save(member);
         } catch (Exception e) {
@@ -59,7 +67,7 @@ public class MemberService {
     }
 
     public boolean signOut(String account) {
-        accessTokenRepository.deleteById(account);
+        refreshTokenRepository.deleteById(account);
         return true;
     }
 
@@ -71,8 +79,17 @@ public class MemberService {
     }
 
     public TokenResponse refresh(String refreshToken) {
+        Member member = AuthUtils.getCurrentMember();
 
+        if (!member.getRefreshToken().equals(refreshToken)) {
+            throw new ApiException(ErrorCode.TOKEN_INVALID);
+        }
 
-        return null;
+        refreshTokenRepository.findById(member.getAccount())
+                .orElseThrow(() -> new ApiException(ErrorCode.TOKEN_EXPIRED));
+
+        String accessToken = jwtProvider.createToken(member.getAccount(), member.getRoles());
+
+        return TokenResponse.from(accessToken);
     }
 }

@@ -1,6 +1,6 @@
 package com.junho.config.security;
 
-import com.junho.homepage.member.Member;
+import com.junho.homepage.member.domain.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
