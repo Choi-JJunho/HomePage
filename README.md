@@ -6,9 +6,9 @@
 
 # Table 구조
 
-**테이블 구조 업데이트 예정**
+**테이블 구조 지속 업데이트 예정**
 
-![img.png](image/table.png)
+![img.png](image/homepage.png)
 
 # 기능 목록
 
