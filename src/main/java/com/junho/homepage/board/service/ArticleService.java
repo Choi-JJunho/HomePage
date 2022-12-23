@@ -1,8 +1,8 @@
 package com.junho.homepage.board.service;
 
 import com.junho.homepage.board.domain.Article;
-import com.junho.homepage.board.dto.ArticleRequest;
-import com.junho.homepage.board.dto.ArticleResponse;
+import com.junho.homepage.board.dto.request.CreateArticle;
+import com.junho.homepage.board.dto.response.ArticleResponse;
 import com.junho.homepage.board.mapper.ArticleMapper;
 import com.junho.homepage.board.repository.ArticleRepository;
 import com.junho.support.error.ErrorCode;
@@ -27,13 +27,13 @@ public class ArticleService {
         return ArticleMapper.INSTANCE.toArticleResponse(article);
     }
 
-    public ArticleResponse postArticle(ArticleRequest request) {
+    public ArticleResponse postArticle(CreateArticle request) {
         Article article = ArticleMapper.INSTANCE.toArticleBySignUp(request);
         articleRepository.save(article);
         return ArticleMapper.INSTANCE.toArticleResponse(article);
     }
 
-    public ArticleResponse updateArticle(Article article, ArticleRequest request) {
+    public ArticleResponse updateArticle(Article article, CreateArticle request) {
         article.update(request);
         return ArticleMapper.INSTANCE.toArticleResponse(article);
     }

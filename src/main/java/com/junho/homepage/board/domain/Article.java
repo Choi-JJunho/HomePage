@@ -1,6 +1,6 @@
 package com.junho.homepage.board.domain;
 
-import com.junho.homepage.board.dto.ArticleRequest;
+import com.junho.homepage.board.dto.request.CreateArticle;
 import com.junho.support.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,7 +36,7 @@ public class Article extends BaseEntity {
 
     // TODO : 첨부파일 고려해보기
 
-    public void update(ArticleRequest request) {
+    public void update(CreateArticle request) {
         this.title = request.getTitle();
         this.description = request.getDescription();
     }

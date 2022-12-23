@@ -2,8 +2,8 @@ package com.junho.homepage.board.controller;
 
 import com.junho.annotation.RoleUser;
 import com.junho.homepage.board.domain.Article;
-import com.junho.homepage.board.dto.ArticleRequest;
-import com.junho.homepage.board.dto.ArticleResponse;
+import com.junho.homepage.board.dto.request.CreateArticle;
+import com.junho.homepage.board.dto.response.ArticleResponse;
 import com.junho.homepage.board.repository.ArticleRepository;
 import com.junho.homepage.board.service.ArticleService;
 import com.junho.homepage.member.domain.Member;
@@ -47,14 +47,14 @@ public class ArticleController {
 
     @RoleUser
     @PostMapping("/post")
-    public ResponseEntity<ArticleResponse> post(@RequestBody ArticleRequest request) {
+    public ResponseEntity<ArticleResponse> post(@RequestBody CreateArticle request) {
 
         return new ResponseEntity<>(articleService.postArticle(request), HttpStatus.OK);
     }
 
     @RoleUser
     @PutMapping("/{id}/update")
-    public ResponseEntity<ArticleResponse> update(@PathVariable Long id, @RequestBody ArticleRequest request) {
+    public ResponseEntity<ArticleResponse> update(@PathVariable Long id, @RequestBody CreateArticle request) {
 
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.ARTICLE_NOT_EXIST));

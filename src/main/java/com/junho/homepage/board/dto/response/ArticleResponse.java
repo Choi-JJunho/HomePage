@@ -1,4 +1,4 @@
-package com.junho.homepage.board.dto;
+package com.junho.homepage.board.dto.response;
 
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.annotations.ApiModelProperty;
@@ -34,6 +34,7 @@ public class ArticleResponse {
     @ApiModelProperty(notes = "수정일자", example = "2020.12.15 12:11")
     private LocalDateTime updateDate;
 
+    // QueryDsl에서 결과를 조회할 때 DTO로 변환하기위해 작성
     // TODO : 더 나은방식은 없나..?
     @QueryProjection
     @Builder

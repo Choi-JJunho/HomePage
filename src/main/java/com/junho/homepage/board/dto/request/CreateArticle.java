@@ -1,4 +1,4 @@
-package com.junho.homepage.board.dto;
+package com.junho.homepage.board.dto.request;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ArticleRequest {
+public class CreateArticle {
 
     @ApiModelProperty(notes = "게시판 아이디", example = "1")
     private String boardId;

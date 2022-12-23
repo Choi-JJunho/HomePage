@@ -3,8 +3,8 @@ package com.junho.homepage.board.repository;
 import com.junho.homepage.board.domain.Article;
 import com.junho.homepage.board.domain.QArticle;
 import com.junho.homepage.board.domain.QBoard;
-import com.junho.homepage.board.dto.ArticleResponse;
-import com.junho.homepage.board.dto.QArticleResponse;
+import com.junho.homepage.board.dto.response.ArticleResponse;
+import com.junho.homepage.board.dto.response.QArticleResponse;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -50,7 +50,7 @@ public class ArticleRepositoryExtensionImpl extends QuerydslRepositorySupport im
                         containTitle(keyword),
                         containDesc(keyword)
                 );
-        
+
         // TODO : Pagination 공통쿼리로 분리
         List<ArticleResponse> fetch = query.fetch();
 
