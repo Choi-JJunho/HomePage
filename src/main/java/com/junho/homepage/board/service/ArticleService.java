@@ -5,8 +5,6 @@ import com.junho.homepage.board.dto.ArticleRequest;
 import com.junho.homepage.board.dto.ArticleResponse;
 import com.junho.homepage.board.mapper.ArticleMapper;
 import com.junho.homepage.board.repository.ArticleRepository;
-import com.junho.homepage.board.repository.BoardRepository;
-import com.junho.homepage.member.domain.Member;
 import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.ApiException;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
-    private final BoardRepository boardRepository;
 
     public ArticleResponse getArticle(Long id) {
         Article article = articleRepository.findById(id)
@@ -30,8 +27,8 @@ public class ArticleService {
         return ArticleMapper.INSTANCE.toArticleResponse(article);
     }
 
-    public ArticleResponse postArticle(ArticleRequest request, Member writer) {
-        Article article = ArticleMapper.INSTANCE.toArticle(request, writer);
+    public ArticleResponse postArticle(ArticleRequest request) {
+        Article article = ArticleMapper.INSTANCE.toArticleBySignUp(request);
         articleRepository.save(article);
         return ArticleMapper.INSTANCE.toArticleResponse(article);
     }
@@ -41,7 +38,7 @@ public class ArticleService {
         return ArticleMapper.INSTANCE.toArticleResponse(article);
     }
 
-    public boolean deleteArticle(Article article, Member currentMember) {
+    public boolean deleteArticle(Article article) {
         articleRepository.deleteById(article.getId());
         return true;
     }

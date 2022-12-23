@@ -3,7 +3,6 @@ package com.junho.homepage.board.mapper;
 import com.junho.homepage.board.domain.Article;
 import com.junho.homepage.board.dto.ArticleRequest;
 import com.junho.homepage.board.dto.ArticleResponse;
-import com.junho.homepage.member.domain.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -24,5 +23,5 @@ public interface ArticleMapper {
     @Mapping(target = "board", ignore = true)
     @Mapping(target = "hits", ignore = true)
     @Mapping(target = "id", ignore = true)
-    Article toArticle(ArticleRequest request, Member member);
+    Article toArticleBySignUp(ArticleRequest request);
 }

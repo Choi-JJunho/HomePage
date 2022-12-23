@@ -47,7 +47,6 @@ public class MemberService {
         refreshTokenRepository.save(RefreshToken.of(member.getAccount(), member.resetToken()));
 
         return TokenResponse.of(accessToken, member.getRefreshToken());
-
     }
 
     public boolean signUp(SignUpRequest request) {

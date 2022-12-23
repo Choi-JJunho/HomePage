@@ -13,10 +13,10 @@ import java.util.Optional;
  * @CreatedBy 어노테이션 적용을 위한 설정
  */
 @Component
-public class SignInConfig implements AuditorAware<Long> {
+public class SignInConfig implements AuditorAware<Member> {
 
     @Override
-    public Optional<Long> getCurrentAuditor() {
+    public Optional<Member> getCurrentAuditor() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
@@ -27,6 +27,6 @@ public class SignInConfig implements AuditorAware<Long> {
         }
 
         Member member = ((CustomUserDetails) authentication.getPrincipal()).getMember();
-        return Optional.ofNullable(member.getId());
+        return Optional.ofNullable(member);
     }
 }

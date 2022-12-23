@@ -33,14 +33,15 @@ public class ArticleController {
     private final ArticleService articleService;
     private final ArticleRepository articleRepository;
 
-
     @GetMapping("/{boardId}/list")
     public ResponseEntity<Page<ArticleResponse>> list(@PathVariable Long boardId, String keyword, @PageableDefault Pageable pageable) {
+
         return new ResponseEntity<>(articleService.getArticles(boardId, keyword, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ArticleResponse> view(@PathVariable Long id) {
+
         return new ResponseEntity<>(articleService.getArticle(id), HttpStatus.OK);
     }
 
@@ -48,8 +49,7 @@ public class ArticleController {
     @PostMapping("/post")
     public ResponseEntity<ArticleResponse> post(@RequestBody ArticleRequest request) {
 
-        Member currentMember = AuthUtils.getCurrentMember();
-        return new ResponseEntity<>(articleService.postArticle(request, currentMember), HttpStatus.OK);
+        return new ResponseEntity<>(articleService.postArticle(request), HttpStatus.OK);
     }
 
     @RoleUser
@@ -58,8 +58,6 @@ public class ArticleController {
 
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.ARTICLE_NOT_EXIST));
-
-        Member currentMember = AuthUtils.getCurrentMember();
 
         return new ResponseEntity<>(articleService.updateArticle(article, request), HttpStatus.OK);
     }
@@ -77,7 +75,6 @@ public class ArticleController {
             throw new ApiException(ErrorCode.AUTHORIZATION_INVALID);
         }
 
-        return new ResponseEntity<>(articleService.deleteArticle(article, currentMember), HttpStatus.OK);
+        return new ResponseEntity<>(articleService.deleteArticle(article), HttpStatus.OK);
     }
-
 }

@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Objects;
 
 @Repository
@@ -49,11 +50,14 @@ public class ArticleRepositoryExtensionImpl extends QuerydslRepositorySupport im
                         containTitle(keyword),
                         containDesc(keyword)
                 );
+        
+        // TODO : Pagination 공통쿼리로 분리
+        List<ArticleResponse> fetch = query.fetch();
 
         JPQLQuery<ArticleResponse> byPagination = Objects.requireNonNull(getQuerydsl())
                 .applyPagination(pageable, query);
 
-        return new PageImpl<>(byPagination.fetch(), pageable, pageable.getPageSize());
+        return new PageImpl<>(byPagination.fetch(), pageable, fetch.size());
     }
 
     private BooleanExpression containTitle(String keyword) {
