@@ -1,4 +1,4 @@
-package com.junho.homepage.utils;
+package com.junho.utils;
 
 import com.junho.config.security.CustomUserDetails;
 import com.junho.homepage.member.domain.Member;

@@ -11,9 +11,9 @@ public enum AuthorityType {
     USER(ROLES.USER, "사용자");
 
     public static class ROLES {
-        public static final String USER = "ROLE_USER";
-        public static final String MANAGER = "ROLE_MANAGER";
         public static final String ADMIN = "ROLE_ADMIN";
+        public static final String MANAGER = "ROLE_MANAGER";
+        public static final String USER = "ROLE_USER";
     }
 
     private final String authority;

@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@RedisHash(value = "refreshToken") // Refresh Token TTL 7Days
+@RedisHash(value = "refreshToken")
 public class RefreshToken {
 
     @Id
@@ -28,7 +28,7 @@ public class RefreshToken {
         return RefreshToken.builder()
                 .id(account)
                 .token(token)
-                .expire_time(3)
+                .expire_time(3) // TTL 3 Days
                 .build();
     }
 
