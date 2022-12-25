@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Transactional
 public interface BoardRepository extends JpaRepository<Board, Long> {
-    Optional<Board> findByName(String name);
+    Optional<Board> findByTitle(String name);
 }
