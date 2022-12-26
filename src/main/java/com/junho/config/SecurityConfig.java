@@ -22,6 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -52,29 +53,18 @@ public class SecurityConfig {
         http
                 .httpBasic().disable()
                 .csrf().disable()
-                .cors(c -> {
-                            CorsConfigurationSource source = request -> {
-                                // Cors 허용 패턴
-                                CorsConfiguration config = new CorsConfiguration();
-                                config.setAllowedOrigins(
-                                        // List.of ("koreatech.in", "jjbaksa.com");
-                                        List.of("*")
-                                );
-                                config.setAllowedMethods(
-                                        // List.of("GET", "POST", "PUT", "DELETE")
-                                        List.of("*")
-                                );
-                                return config;
-                            };
-                            c.configurationSource(source);
-                        }
-                )
+                .cors()
+                .and()
+
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+
                 .authorizeRequests()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
+
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new ExceptionHandlerFilter(), JwtAuthenticationFilter.class)
                 .exceptionHandling()
@@ -90,6 +80,25 @@ public class SecurityConfig {
                         });
 
         return http.build();
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        return request -> {
+            // Cors 허용 패턴
+            CorsConfiguration config = new CorsConfiguration();
+            config.setAllowedOrigins(
+                    // List.of ("koreatech.in", "jjbaksa.com");
+                    List.of("*")
+            );
+            config.setAllowedMethods(
+                    // List.of("GET", "POST", "PUT", "DELETE")
+                    List.of("*")
+            );
+            config.setAllowedHeaders(List.of("*"));
+
+            return config;
+        };
     }
 
     private void setErrorMessage(HttpServletResponse response, ErrorCode errorCode) throws IOException {

@@ -4,9 +4,8 @@ import com.junho.homepage.board.domain.Article;
 import com.junho.homepage.board.domain.QArticle;
 import com.junho.homepage.board.domain.QBoard;
 import com.junho.homepage.board.dto.response.ArticleResponse;
-import com.junho.homepage.board.dto.response.QArticleResponse;
+import com.junho.homepage.board.mapper.ArticleMapper;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Repository
 public class ArticleRepositoryExtensionImpl extends QuerydslRepositorySupport implements ArticleRepositoryExtension {
@@ -35,16 +35,8 @@ public class ArticleRepositoryExtensionImpl extends QuerydslRepositorySupport im
     @Override
     public Page<ArticleResponse> findAll(Long boardId, String keyword, Pageable pageable) {
 
-        JPAQuery<ArticleResponse> query = queryFactory
-                .select(new QArticleResponse(
-                        article.id,
-                        article.creator.id,
-                        article.modifier.id,
-                        article.title,
-                        article.description,
-                        article.createDate,
-                        article.updateDate
-                ))
+        JPAQuery<Article> query = queryFactory
+                .select(article)
                 .from(article)
                 .where(
                         containTitle(keyword),
@@ -52,12 +44,16 @@ public class ArticleRepositoryExtensionImpl extends QuerydslRepositorySupport im
                 );
 
         // TODO : Pagination 공통쿼리로 분리
-        List<ArticleResponse> fetch = query.fetch();
+        List<Article> fetch = query.fetch();
 
-        JPQLQuery<ArticleResponse> byPagination = Objects.requireNonNull(getQuerydsl())
-                .applyPagination(pageable, query);
+        List<Article> byPagination = Objects.requireNonNull(getQuerydsl())
+                .applyPagination(pageable, query).fetch();
 
-        return new PageImpl<>(byPagination.fetch(), pageable, fetch.size());
+        List<ArticleResponse> response = byPagination.stream()
+                .map(ArticleMapper.INSTANCE::toArticleResponse)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(response, pageable, fetch.size());
     }
 
     private BooleanExpression containTitle(String keyword) {

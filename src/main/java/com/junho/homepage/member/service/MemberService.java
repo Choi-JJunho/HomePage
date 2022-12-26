@@ -16,6 +16,8 @@ import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.ApiException;
 import com.junho.utils.AuthUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,5 +92,10 @@ public class MemberService {
         String accessToken = jwtProvider.createToken(member.getAccount(), member.getRoles());
 
         return TokenResponse.from(accessToken);
+    }
+
+    public Page<MemberResponse> getMembers(String keyword, Pageable pageable) {
+
+        return memberRepository.findAll(keyword, pageable);
     }
 }
