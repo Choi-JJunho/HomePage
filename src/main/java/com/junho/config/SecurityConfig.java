@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,7 +29,7 @@ import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+@EnableMethodSecurity
 public class SecurityConfig {
 
     private final JwtProvider jwtProvider;
@@ -71,15 +71,12 @@ public class SecurityConfig {
                 )
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests().anyRequest().permitAll()
-                // TODO : 권한에 따른 접근 제한범위 설정
-//                .antMatchers("/**").permitAll()
-//                .antMatchers(swaggerPaths).permitAll()
-//                .anyRequest().authenticated()
+                .authorizeRequests()
+                .antMatchers("/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new ExceptionHandlerFilter(), JwtAuthenticationFilter.class)
-
                 .exceptionHandling()
                 .accessDeniedHandler(
                         (request, response, accessDeniedException) -> {

@@ -54,7 +54,7 @@ public class MemberService {
             Member member = MemberMapper.INSTANCE.toMemberEntity(request);
             member.setRoles(Collections.singletonList(
                     Authority.builder()
-                            .name(AuthorityType.ROLES.ADMIN)
+                            .name(AuthorityType.ROLES.MANAGER)
                             .build())
             );
 
