@@ -1,10 +1,12 @@
 package com.junho.homepage.board.service;
 
 import com.junho.homepage.board.domain.Article;
+import com.junho.homepage.board.domain.Board;
 import com.junho.homepage.board.dto.request.CreateArticle;
 import com.junho.homepage.board.dto.response.ArticleResponse;
 import com.junho.homepage.board.mapper.ArticleMapper;
 import com.junho.homepage.board.repository.ArticleRepository;
+import com.junho.homepage.board.repository.BoardRepository;
 import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.ApiException;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
+    private final BoardRepository boardRepository;
 
     public ArticleResponse getArticle(Long id) {
         Article article = articleRepository.findById(id)
@@ -28,7 +31,16 @@ public class ArticleService {
     }
 
     public ArticleResponse postArticle(CreateArticle request) {
-        Article article = ArticleMapper.INSTANCE.toArticleBySignUp(request);
+
+        Board board = boardRepository.findById(request.getBoardId())
+                .orElseThrow(() -> new ApiException(ErrorCode.BOARD_NOT_EXIST));
+
+        Article article = Article.builder()
+                .title(request.getTitle())
+                .description(request.getDescription())
+                .board(board)
+                .build();
+        
         articleRepository.save(article);
         return ArticleMapper.INSTANCE.toArticleResponse(article);
     }

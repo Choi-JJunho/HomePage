@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class CreateArticle {
 
     @ApiModelProperty(notes = "게시판 아이디", example = "1")
-    private String boardId;
+    private Long boardId;
 
     @ApiModelProperty(notes = "게시물 제목", example = "최준호의 게시글입니다.")
     private String title;

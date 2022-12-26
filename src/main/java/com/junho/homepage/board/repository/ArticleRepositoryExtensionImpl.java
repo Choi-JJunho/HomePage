@@ -39,6 +39,7 @@ public class ArticleRepositoryExtensionImpl extends QuerydslRepositorySupport im
                 .select(article)
                 .from(article)
                 .where(
+                        article.board.id.eq(boardId),
                         containTitle(keyword),
                         containDesc(keyword)
                 );

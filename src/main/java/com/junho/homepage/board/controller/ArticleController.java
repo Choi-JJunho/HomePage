@@ -11,9 +11,6 @@ import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.ApiException;
 import com.junho.utils.AuthUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,22 +19,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/article")
 public class ArticleController {
 
     private final ArticleService articleService;
     private final ArticleRepository articleRepository;
-
-    @GetMapping("/{boardId}/list")
-    public ResponseEntity<Page<ArticleResponse>> list(@PathVariable Long boardId, String keyword, @PageableDefault Pageable pageable) {
-
-        return new ResponseEntity<>(articleService.getArticles(boardId, keyword, pageable), HttpStatus.OK);
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ArticleResponse> view(@PathVariable Long id) {
@@ -48,7 +41,6 @@ public class ArticleController {
     @RoleUser
     @PostMapping("/post")
     public ResponseEntity<ArticleResponse> post(@RequestBody CreateArticle request) {
-
         return new ResponseEntity<>(articleService.postArticle(request), HttpStatus.OK);
     }
 
