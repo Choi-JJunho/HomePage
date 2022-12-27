@@ -54,7 +54,7 @@ public class BoardController {
     }
 
     @RoleAdmin
-    @PutMapping("/{id}/update")
+    @PutMapping("/{id}")
     public ResponseEntity<BoardResponse> update(@PathVariable Long id, @RequestBody CreateBoard request) {
 
         Board board = boardRepository.findById(id)
@@ -64,7 +64,7 @@ public class BoardController {
     }
 
     @RoleAdmin
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable Long id) {
 
         Board board = boardRepository.findById(id)

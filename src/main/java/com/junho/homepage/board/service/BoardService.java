@@ -27,13 +27,12 @@ public class BoardService {
     }
 
     public Boolean createBoard(CreateBoard request) {
-        try {
-            Board board = BoardMapper.INSTANCE.toBoard(request);
-            boardRepository.save(board);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (boardRepository.findByTitle(request.getTitle()).isPresent()) {
             throw new ApiException(ErrorCode.BOARD_ALREADY_EXIST);
         }
+
+        Board board = BoardMapper.INSTANCE.toBoard(request);
+        boardRepository.save(board);
 
         return true;
     }

@@ -50,4 +50,12 @@ public abstract class BaseEntity {
     @OneToOne
     private Member modifier;
 
+    /**
+     * Soft Delete 용
+     */
+    private boolean enabled = true;
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 }
