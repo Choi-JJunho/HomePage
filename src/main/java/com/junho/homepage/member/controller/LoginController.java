@@ -1,5 +1,6 @@
 package com.junho.homepage.member.controller;
 
+import com.junho.annotation.RoleUser;
 import com.junho.config.security.token.TokenResponse;
 import com.junho.homepage.member.dto.request.SignInRequest;
 import com.junho.homepage.member.dto.request.SignUpRequest;
@@ -41,6 +42,7 @@ public class LoginController {
         return new ResponseEntity<>(memberService.signOut(authentication.getName()), HttpStatus.OK);
     }
 
+    @RoleUser
     @ApiOperation(value = "토큰 재발급", notes = "refresh Token의 정보를 토대로 access 토큰 재발급")
     @PostMapping(value = "/refresh")
     public ResponseEntity<TokenResponse> tokenRefresh(String token) {
