@@ -43,7 +43,7 @@ public class BoardService {
     }
 
     public Boolean deleteBoard(Board board) {
-        boardRepository.deleteById(board.getId());
+        board.setEnabled(false);
         return true;
     }
 }

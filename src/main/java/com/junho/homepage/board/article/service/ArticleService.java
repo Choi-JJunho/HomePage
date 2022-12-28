@@ -51,7 +51,7 @@ public class ArticleService {
     }
 
     public boolean deleteArticle(Article article) {
-        articleRepository.deleteById(article.getId());
+        article.setEnabled(false);
         return true;
     }
 

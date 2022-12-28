@@ -1,7 +1,8 @@
 package com.junho.homepage.board.article;
 
-import com.junho.homepage.board.article.dto.request.CreateArticle;
 import com.junho.homepage.board.Board;
+import com.junho.homepage.board.article.dto.request.CreateArticle;
+import com.junho.homepage.board.comment.Comment;
 import com.junho.support.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -34,6 +38,9 @@ public class Article extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<>();
 
     // TODO : 첨부파일 고려해보기
 

@@ -35,4 +35,6 @@ public class ArticleResponse {
 
     @ApiModelProperty(notes = "수정일자", example = "2020.12.15 12:11")
     private LocalDateTime updateDate;
+
+    // TODO : 댓글 ArticleResponse에 포함시킬건지?
 }

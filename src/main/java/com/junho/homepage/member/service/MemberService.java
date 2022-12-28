@@ -98,4 +98,7 @@ public class MemberService {
 
         return memberRepository.findAll(keyword, pageable);
     }
+
+    // TODO : 회원 탈퇴기능
+
 }

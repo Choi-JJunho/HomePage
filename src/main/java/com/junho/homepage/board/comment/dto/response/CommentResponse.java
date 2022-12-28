@@ -27,4 +27,6 @@ public class CommentResponse {
 
     @ApiModelProperty(notes = "수정자")
     private MemberResponse modifier;
+
+    // TODO : 대댓글 표현방식?
 }

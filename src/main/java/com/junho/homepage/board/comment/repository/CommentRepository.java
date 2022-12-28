@@ -10,5 +10,7 @@ import java.util.Optional;
 @Transactional
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
+    // TODO: 계층구조 생각해서 List<Comment> 부분 다시 고려하기
+    //  + 쿼리 최적화
     Optional<List<Comment>> findByArticle_Id(Long articleId);
 }

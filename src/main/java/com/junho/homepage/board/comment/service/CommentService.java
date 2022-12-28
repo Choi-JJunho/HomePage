@@ -3,7 +3,6 @@ package com.junho.homepage.board.comment.service;
 import com.junho.homepage.board.article.repository.ArticleRepository;
 import com.junho.homepage.board.comment.Comment;
 import com.junho.homepage.board.comment.dto.request.CreateComment;
-import com.junho.homepage.board.comment.dto.request.ModifyComment;
 import com.junho.homepage.board.comment.dto.response.CommentResponse;
 import com.junho.homepage.board.comment.repository.CommentMapper;
 import com.junho.homepage.board.comment.repository.CommentRepository;
@@ -11,11 +10,13 @@ import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CommentService {
 
@@ -56,21 +57,13 @@ public class CommentService {
         return true;
     }
 
-    public CommentResponse modifyComment(ModifyComment request) {
-        Comment comment = commentRepository.findById(request.getId())
-                .orElseThrow(() -> new ApiException(ErrorCode.COMMENT_NOT_EXIST));
-
+    public CommentResponse modifyComment(Comment comment, CreateComment request) {
         comment.update(request);
-
         return CommentMapper.INSTANCE.toCommentResponse(comment);
     }
 
-    public boolean deleteComment(Long commentId) {
-        Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new ApiException(ErrorCode.COMMENT_NOT_EXIST));
-
+    public boolean deleteComment(Comment comment) {
         comment.setEnabled(false);
-
         return true;
     }
 }

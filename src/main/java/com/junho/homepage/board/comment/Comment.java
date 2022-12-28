@@ -1,7 +1,7 @@
 package com.junho.homepage.board.comment;
 
 import com.junho.homepage.board.article.Article;
-import com.junho.homepage.board.comment.dto.request.ModifyComment;
+import com.junho.homepage.board.comment.dto.request.CreateComment;
 import com.junho.support.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,7 +37,7 @@ public class Comment extends BaseEntity {
 
     private Integer depth;
 
-    public void update(ModifyComment request) {
+    public void update(CreateComment request) {
         this.description = request.getDescription();
     }
 }
