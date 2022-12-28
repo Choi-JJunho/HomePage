@@ -3,6 +3,7 @@ package com.junho.homepage.member.repository;
 import com.junho.homepage.member.Member;
 import com.junho.homepage.member.QMember;
 import com.junho.homepage.member.dto.response.MemberResponse;
+import com.junho.support.CustomQueryDslSupport;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -10,15 +11,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Repository
-public class MemberRepositoryExtensionImpl extends QuerydslRepositorySupport implements MemberRepositoryExtension {
+public class MemberRepositoryExtensionImpl extends CustomQueryDslSupport implements MemberRepositoryExtension {
 
     private final JPAQueryFactory queryFactory;
 
@@ -37,17 +36,13 @@ public class MemberRepositoryExtensionImpl extends QuerydslRepositorySupport imp
                         containName(keyword)
                 );
 
-        // TODO : Pagination 공통쿼리로 분리
-        List<Member> fetch = query.fetch();
+        Page<Member> page = page(query, pageable);
 
-        List<Member> byPagination = Objects.requireNonNull(getQuerydsl())
-                .applyPagination(pageable, query).fetch();
-
-        List<MemberResponse> response = byPagination.stream()
+        List<MemberResponse> response = page.stream()
                 .map(MemberMapper.INSTANCE::toMemberResponse)
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(response, pageable, fetch.size());
+        return new PageImpl<>(response, pageable, page.getTotalElements());
     }
 
     private BooleanExpression containName(String keyword) {

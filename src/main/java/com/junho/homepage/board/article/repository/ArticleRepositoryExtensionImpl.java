@@ -1,31 +1,26 @@
 package com.junho.homepage.board.article.repository;
 
-import com.junho.homepage.board.QBoard;
 import com.junho.homepage.board.article.Article;
 import com.junho.homepage.board.article.QArticle;
 import com.junho.homepage.board.article.dto.response.ArticleResponse;
 import com.junho.homepage.board.article.mapper.ArticleMapper;
-import com.querydsl.core.types.dsl.BooleanExpression;
+import com.junho.support.CustomQueryDslSupport;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Repository
-public class ArticleRepositoryExtensionImpl extends QuerydslRepositorySupport implements ArticleRepositoryExtension {
+public class ArticleRepositoryExtensionImpl extends CustomQueryDslSupport implements ArticleRepositoryExtension {
 
     private final JPAQueryFactory queryFactory;
 
     private final QArticle article = QArticle.article;
-    private final QBoard board = QBoard.board;
 
     public ArticleRepositoryExtensionImpl(JPAQueryFactory jpaQueryFactory) {
         super(Article.class);
@@ -40,34 +35,16 @@ public class ArticleRepositoryExtensionImpl extends QuerydslRepositorySupport im
                 .from(article)
                 .where(
                         article.board.id.eq(boardId),
-                        containTitle(keyword),
-                        containDesc(keyword)
+                        find(keyword, article.title, article.description)
                 );
 
-        // TODO : Pagination 공통쿼리로 분리
-        List<Article> fetch = query.fetch();
+        Page<Article> page = page(query, pageable);
 
-        List<Article> byPagination = Objects.requireNonNull(getQuerydsl())
-                .applyPagination(pageable, query).fetch();
-
-        List<ArticleResponse> response = byPagination.stream()
+        // TODO : QueryProjection vs 가져와서 변환?
+        List<ArticleResponse> response = page.stream()
                 .map(ArticleMapper.INSTANCE::toArticleResponse)
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(response, pageable, fetch.size());
-    }
-
-    private BooleanExpression containTitle(String keyword) {
-        if (StringUtils.isBlank(keyword)) {
-            return null;
-        }
-        return article.title.containsIgnoreCase(keyword);
-    }
-
-    private BooleanExpression containDesc(String keyword) {
-        if (StringUtils.isBlank(keyword)) {
-            return null;
-        }
-        return article.title.containsIgnoreCase(keyword);
+        return new PageImpl<>(response, pageable, page.getTotalElements());
     }
 }

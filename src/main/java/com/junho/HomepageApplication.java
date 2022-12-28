@@ -1,20 +1,11 @@
 package com.junho;
 
-import com.junho.config.security.AuthorityType;
-import com.junho.homepage.member.Authority;
-import com.junho.homepage.member.Member;
-import com.junho.homepage.member.dto.request.SignUpRequest;
-import com.junho.homepage.member.repository.MemberMapper;
 import com.junho.homepage.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Collections;
 
 @SpringBootApplication
 @EnableJpaAuditing
@@ -27,6 +18,7 @@ public class HomepageApplication {
     public static void main(String[] args) {
         SpringApplication.run(HomepageApplication.class, args);
     }
+/*
 
     @Bean
     public ApplicationRunner applicationRunner() {
@@ -78,5 +70,6 @@ public class HomepageApplication {
 
         return args -> System.out.println("save init Members");
     }
+*/
 
 }
