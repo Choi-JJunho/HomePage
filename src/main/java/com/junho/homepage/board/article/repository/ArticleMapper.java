@@ -1,4 +1,4 @@
-package com.junho.homepage.board.article.mapper;
+package com.junho.homepage.board.article.repository;
 
 import com.junho.homepage.board.article.Article;
 import com.junho.homepage.board.article.dto.response.ArticleResponse;

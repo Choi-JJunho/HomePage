@@ -3,7 +3,6 @@ package com.junho.homepage.board.article.repository;
 import com.junho.homepage.board.article.Article;
 import com.junho.homepage.board.article.QArticle;
 import com.junho.homepage.board.article.dto.response.ArticleResponse;
-import com.junho.homepage.board.article.mapper.ArticleMapper;
 import com.junho.support.CustomQueryDslSupport;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;

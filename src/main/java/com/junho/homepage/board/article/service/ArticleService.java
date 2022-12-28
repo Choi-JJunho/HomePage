@@ -1,11 +1,11 @@
 package com.junho.homepage.board.article.service;
 
+import com.junho.homepage.board.Board;
 import com.junho.homepage.board.article.Article;
 import com.junho.homepage.board.article.dto.request.CreateArticle;
 import com.junho.homepage.board.article.dto.response.ArticleResponse;
-import com.junho.homepage.board.article.mapper.ArticleMapper;
+import com.junho.homepage.board.article.repository.ArticleMapper;
 import com.junho.homepage.board.article.repository.ArticleRepository;
-import com.junho.homepage.board.Board;
 import com.junho.homepage.board.repository.BoardRepository;
 import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.ApiException;
