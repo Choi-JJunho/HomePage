@@ -1,7 +1,7 @@
 package com.junho.config;
 
 import com.junho.config.security.CustomUserDetails;
-import com.junho.homepage.member.domain.Member;
+import com.junho.homepage.member.Member;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -1,6 +1,6 @@
-package com.junho.homepage.board.repository;
+package com.junho.homepage.board.article.repository;
 
-import com.junho.homepage.board.dto.response.ArticleResponse;
+import com.junho.homepage.board.article.dto.response.ArticleResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -5,12 +5,12 @@ import com.junho.config.security.JwtProvider;
 import com.junho.config.security.token.RefreshToken;
 import com.junho.config.security.token.RefreshTokenRepository;
 import com.junho.config.security.token.TokenResponse;
-import com.junho.homepage.member.domain.Authority;
-import com.junho.homepage.member.domain.Member;
+import com.junho.homepage.member.Authority;
+import com.junho.homepage.member.Member;
 import com.junho.homepage.member.dto.request.SignInRequest;
 import com.junho.homepage.member.dto.request.SignUpRequest;
 import com.junho.homepage.member.dto.response.MemberResponse;
-import com.junho.homepage.member.mapper.MemberMapper;
+import com.junho.homepage.member.repository.MemberMapper;
 import com.junho.homepage.member.repository.MemberRepository;
 import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.ApiException;
@@ -72,8 +72,8 @@ public class MemberService {
         return true;
     }
 
-    public MemberResponse getMember(String account) {
-        Member member = memberRepository.findByAccount(account)
+    public MemberResponse getMember(String name) {
+        Member member = memberRepository.findByName(name)
                 .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND));
 
         return MemberMapper.INSTANCE.toMemberResponse(member);

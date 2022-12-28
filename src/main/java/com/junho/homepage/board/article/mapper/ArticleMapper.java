@@ -1,7 +1,7 @@
-package com.junho.homepage.board.mapper;
+package com.junho.homepage.board.article.mapper;
 
-import com.junho.homepage.board.domain.Article;
-import com.junho.homepage.board.dto.response.ArticleResponse;
+import com.junho.homepage.board.article.Article;
+import com.junho.homepage.board.article.dto.response.ArticleResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;

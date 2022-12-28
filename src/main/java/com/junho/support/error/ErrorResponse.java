@@ -8,9 +8,7 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @RequiredArgsConstructor
 public class ErrorResponse {
-
     private final int code;
     private final int httpStatus;
     private final String message;
-
 }

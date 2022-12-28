@@ -1,6 +1,6 @@
 package com.junho.support;
 
-import com.junho.homepage.member.domain.Member;
+import com.junho.homepage.member.Member;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;

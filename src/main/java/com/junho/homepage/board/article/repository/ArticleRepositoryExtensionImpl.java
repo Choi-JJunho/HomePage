@@ -1,10 +1,10 @@
-package com.junho.homepage.board.repository;
+package com.junho.homepage.board.article.repository;
 
-import com.junho.homepage.board.domain.Article;
-import com.junho.homepage.board.domain.QArticle;
-import com.junho.homepage.board.domain.QBoard;
-import com.junho.homepage.board.dto.response.ArticleResponse;
-import com.junho.homepage.board.mapper.ArticleMapper;
+import com.junho.homepage.board.QBoard;
+import com.junho.homepage.board.article.Article;
+import com.junho.homepage.board.article.QArticle;
+import com.junho.homepage.board.article.dto.response.ArticleResponse;
+import com.junho.homepage.board.article.mapper.ArticleMapper;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;

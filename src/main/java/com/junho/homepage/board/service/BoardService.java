@@ -1,9 +1,9 @@
 package com.junho.homepage.board.service;
 
-import com.junho.homepage.board.domain.Board;
+import com.junho.homepage.board.Board;
 import com.junho.homepage.board.dto.request.CreateBoard;
 import com.junho.homepage.board.dto.response.BoardResponse;
-import com.junho.homepage.board.mapper.BoardMapper;
+import com.junho.homepage.board.repository.BoardMapper;
 import com.junho.homepage.board.repository.BoardRepository;
 import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.ApiException;

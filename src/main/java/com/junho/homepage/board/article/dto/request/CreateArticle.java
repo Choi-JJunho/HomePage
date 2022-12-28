@@ -1,4 +1,4 @@
-package com.junho.homepage.board.dto.request;
+package com.junho.homepage.board.article.dto.request;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

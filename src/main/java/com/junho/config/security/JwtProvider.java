@@ -1,6 +1,6 @@
 package com.junho.config.security;
 
-import com.junho.homepage.member.domain.Authority;
+import com.junho.homepage.member.Authority;
 import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.TokenExpiredException;
 import io.jsonwebtoken.Claims;

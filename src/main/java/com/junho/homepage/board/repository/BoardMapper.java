@@ -1,6 +1,6 @@
-package com.junho.homepage.board.mapper;
+package com.junho.homepage.board.repository;
 
-import com.junho.homepage.board.domain.Board;
+import com.junho.homepage.board.Board;
 import com.junho.homepage.board.dto.request.CreateBoard;
 import com.junho.homepage.board.dto.response.BoardResponse;
 import org.mapstruct.Mapper;

@@ -1,7 +1,7 @@
 package com.junho.utils;
 
 import com.junho.config.security.CustomUserDetails;
-import com.junho.homepage.member.domain.Member;
+import com.junho.homepage.member.Member;
 import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.ApiException;
 import org.springframework.security.core.Authentication;

@@ -1,4 +1,4 @@
-package com.junho.homepage.member.domain;
+package com.junho.homepage.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.junho.homepage.member.domain;
+package com.junho.homepage.member;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

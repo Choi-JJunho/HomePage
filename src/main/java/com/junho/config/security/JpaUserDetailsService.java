@@ -1,6 +1,6 @@
 package com.junho.config.security;
 
-import com.junho.homepage.member.domain.Member;
+import com.junho.homepage.member.Member;
 import com.junho.homepage.member.repository.MemberRepository;
 import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.AuthException;

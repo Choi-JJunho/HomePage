@@ -1,9 +1,8 @@
 package com.junho.homepage.member.repository;
 
-import com.junho.homepage.member.domain.Member;
-import com.junho.homepage.member.domain.QMember;
+import com.junho.homepage.member.Member;
+import com.junho.homepage.member.QMember;
 import com.junho.homepage.member.dto.response.MemberResponse;
-import com.junho.homepage.member.mapper.MemberMapper;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;

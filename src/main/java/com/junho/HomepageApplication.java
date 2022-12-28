@@ -1,10 +1,10 @@
 package com.junho;
 
 import com.junho.config.security.AuthorityType;
-import com.junho.homepage.member.domain.Authority;
-import com.junho.homepage.member.domain.Member;
+import com.junho.homepage.member.Authority;
+import com.junho.homepage.member.Member;
 import com.junho.homepage.member.dto.request.SignUpRequest;
-import com.junho.homepage.member.mapper.MemberMapper;
+import com.junho.homepage.member.repository.MemberMapper;
 import com.junho.homepage.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationRunner;

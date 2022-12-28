@@ -1,4 +1,4 @@
-package com.junho.homepage.board.dto.response;
+package com.junho.homepage.board.article.dto.response;
 
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,12 +1,12 @@
 package com.junho.homepage.board.controller;
 
 import com.junho.annotation.RoleAdmin;
-import com.junho.homepage.board.domain.Board;
+import com.junho.homepage.board.Board;
+import com.junho.homepage.board.article.dto.response.ArticleResponse;
+import com.junho.homepage.board.article.service.ArticleService;
 import com.junho.homepage.board.dto.request.CreateBoard;
-import com.junho.homepage.board.dto.response.ArticleResponse;
 import com.junho.homepage.board.dto.response.BoardResponse;
 import com.junho.homepage.board.repository.BoardRepository;
-import com.junho.homepage.board.service.ArticleService;
 import com.junho.homepage.board.service.BoardService;
 import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.ApiException;

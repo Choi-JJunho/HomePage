@@ -1,8 +1,8 @@
-package com.junho.homepage.member.mapper;
+package com.junho.homepage.member.repository;
 
 import com.junho.config.security.AuthorityType;
-import com.junho.homepage.member.domain.Authority;
-import com.junho.homepage.member.domain.Member;
+import com.junho.homepage.member.Authority;
+import com.junho.homepage.member.Member;
 import com.junho.homepage.member.dto.request.SignUpRequest;
 import com.junho.homepage.member.dto.response.MemberResponse;
 import org.mapstruct.Mapper;

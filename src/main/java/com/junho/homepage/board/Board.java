@@ -1,47 +1,36 @@
-package com.junho.homepage.board.domain;
+package com.junho.homepage.board;
 
-import com.junho.homepage.board.dto.request.CreateArticle;
+import com.junho.homepage.board.dto.request.CreateBoard;
 import com.junho.support.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
-@Getter
 @Entity
+@Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Article extends BaseEntity {
+public class Board extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String title;
 
     private String description;
 
-    private Integer hits;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Board board;
-
-    // TODO : 첨부파일 고려해보기
-
-    public void update(CreateArticle request) {
+    public void update(CreateBoard request) {
         this.title = request.getTitle();
         this.description = request.getDescription();
-    }
-
-    public void increaseViewCount() {
-        this.hits++;
     }
 }
