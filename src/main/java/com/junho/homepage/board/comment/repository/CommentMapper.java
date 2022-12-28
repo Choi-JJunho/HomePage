@@ -1,7 +1,7 @@
-package com.junho.homepage.board.article.repository;
+package com.junho.homepage.board.comment.repository;
 
-import com.junho.homepage.board.article.Article;
-import com.junho.homepage.board.article.dto.response.ArticleResponse;
+import com.junho.homepage.board.comment.Comment;
+import com.junho.homepage.board.comment.dto.response.CommentResponse;
 import com.junho.homepage.member.Member;
 import com.junho.homepage.member.dto.response.MemberResponse;
 import com.junho.homepage.member.repository.MemberMapper;
@@ -15,13 +15,13 @@ import org.mapstruct.factory.Mappers;
         unmappedSourcePolicy = ReportingPolicy.IGNORE,
         unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
-public interface ArticleMapper {
+public interface CommentMapper {
 
-    ArticleMapper INSTANCE = Mappers.getMapper(ArticleMapper.class);
+    CommentMapper INSTANCE = Mappers.getMapper(CommentMapper.class);
 
     @Mapping(source = "creator", target = "creator", qualifiedByName = "parseMember")
     @Mapping(source = "modifier", target = "modifier", qualifiedByName = "parseMember")
-    ArticleResponse toArticleResponse(Article entity);
+    CommentResponse toCommentResponse(Comment entity);
 
     @Named("parseMember")
     default MemberResponse parseMember(Member entity) {

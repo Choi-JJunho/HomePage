@@ -45,8 +45,8 @@ public class ArticleController {
     }
 
     @RoleUser
-    @PutMapping("/{id}/update")
-    public ResponseEntity<ArticleResponse> update(@PathVariable Long id, @RequestBody CreateArticle request) {
+    @PutMapping("/{id}")
+    public ResponseEntity<ArticleResponse> modify(@PathVariable Long id, @RequestBody CreateArticle request) {
 
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.ARTICLE_NOT_EXIST));

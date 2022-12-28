@@ -1,9 +1,9 @@
-DROP TABLE IF EXISTS member;
+DROP TABLE IF EXISTS `member`;
 DROP TABLE IF EXISTS authority;
 DROP TABLE IF EXISTS board;
 DROP TABLE IF EXISTS article;
 
-CREATE TABLE member
+CREATE TABLE `member`
 (
     id            BIGINT AUTO_INCREMENT NOT NULL,
     account       VARCHAR(255) UNIQUE   NULL,
@@ -12,7 +12,7 @@ CREATE TABLE member
     name          VARCHAR(255)          NULL,
     email         VARCHAR(255)          NULL,
     refresh_token VARCHAR(100)          NULL,
-    enabled       TINYINT(1)            NOT NULL,
+    enabled       TINYINT(1) DEFAULT 1  NOT NULL,
     CONSTRAINT pk_member PRIMARY KEY (id)
 );
 
@@ -20,7 +20,7 @@ CREATE TABLE authority
 (
     id        BIGINT AUTO_INCREMENT NOT NULL,
     name      VARCHAR(255)          NULL,
-    member_id BIGINT                NULL,
+    member_id BIGINT                NULL, # FK
     CONSTRAINT pk_authority PRIMARY KEY (id)
 );
 
@@ -33,7 +33,7 @@ CREATE TABLE board
     update_date   datetime              NULL,
     creator_id    BIGINT                NULL,
     modifier_id   BIGINT                NULL,
-    enabled       TINYINT(1)            NOT NULL,
+    enabled       TINYINT(1) DEFAULT 1  NOT NULL,
     CONSTRAINT pk_board PRIMARY KEY (id)
 );
 
@@ -43,11 +43,26 @@ CREATE TABLE article
     title         VARCHAR(255)          NULL,
     `description` VARCHAR(255)          NULL,
     hits          INT                   NULL,
-    board_id      BIGINT                NULL,
+    board_id      BIGINT                NULL, # FK
     create_date   datetime              NULL,
     update_date   datetime              NULL,
     creator_id    BIGINT                NULL,
     modifier_id   BIGINT                NULL,
-    enabled       TINYINT(1)            NOT NULL,
+    enabled       TINYINT(1) DEFAULT 1  NOT NULL,
+    CONSTRAINT pk_article PRIMARY KEY (id)
+);
+
+CREATE TABLE `comment`
+(
+    id            BIGINT AUTO_INCREMENT NOT NULL,
+    `description` VARCHAR(255)          NULL,
+    article_id    BIGINT                NULL, # FK
+    parent_id     BIGINT                NULL,
+    depth         BIGINT                NULL,
+    create_date   datetime              NULL,
+    update_date   datetime              NULL,
+    creator_id    BIGINT                NULL,
+    modifier_id   BIGINT                NULL,
+    enabled       TINYINT(1) DEFAULT 1  NOT NULL,
     CONSTRAINT pk_article PRIMARY KEY (id)
 );

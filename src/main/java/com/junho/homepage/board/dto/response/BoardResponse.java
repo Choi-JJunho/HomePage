@@ -1,5 +1,6 @@
 package com.junho.homepage.board.dto.response;
 
+import com.junho.homepage.member.dto.response.MemberResponse;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,11 +24,11 @@ public class BoardResponse {
     @ApiModelProperty(notes = "게시판 내용", example = "게시글의 내용입니다.")
     private String description;
 
-    @ApiModelProperty(notes = "작성자 id", example = "10")
-    private Long creatorId;
+    @ApiModelProperty(notes = "작성자")
+    private MemberResponse creator;
 
-    @ApiModelProperty(notes = "작성자 id", example = "10")
-    private Long modifierId;
+    @ApiModelProperty(notes = "수정자")
+    private MemberResponse modifier;
 
     @ApiModelProperty(notes = "생성일자", example = "2020.12.15 12:11")
     private LocalDateTime createDate;

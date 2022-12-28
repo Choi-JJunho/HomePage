@@ -25,7 +25,9 @@ public enum ErrorCode {
     /* 게시물 관련 -200 ~ -299  */
     ARTICLE_NOT_EXIST(-200, HttpStatus.NOT_FOUND, "게시물을 찾을 수 없습니다."),
     BOARD_NOT_EXIST(-201, HttpStatus.NOT_FOUND, "게시판을 찾을 수 없습니다."),
-    BOARD_ALREADY_EXIST(-202, HttpStatus.CONFLICT, "해당 게시판이 이미 존재합니다.");
+    BOARD_ALREADY_EXIST(-202, HttpStatus.CONFLICT, "해당 게시판이 이미 존재합니다."),
+    COMMENT_NOT_EXIST(-203, HttpStatus.NOT_FOUND, "댓글이 존재하지 않습니다."),
+    ;
 
 
     /* 00 서비스 관련 오류  -300 ~ -399*/

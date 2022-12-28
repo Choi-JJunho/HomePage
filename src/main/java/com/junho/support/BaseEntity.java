@@ -2,6 +2,7 @@ package com.junho.support;
 
 import com.junho.homepage.member.Member;
 import lombok.Getter;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
  * 등록일시, 갱신일시, 삭제여부
  * 동일한 패턴으로 사용되는 엔티티 상속으로 사용
  */
+@Where(clause = "enable = true")
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
