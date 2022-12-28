@@ -8,6 +8,7 @@ import com.junho.homepage.board.comment.repository.CommentRepository;
 import com.junho.homepage.board.comment.service.CommentService;
 import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.ApiException;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Api(tags = "댓글 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/comment")

@@ -10,6 +10,7 @@ import com.junho.homepage.board.repository.BoardRepository;
 import com.junho.homepage.board.service.BoardService;
 import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.ApiException;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Api(tags = "게시판 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/board")

@@ -5,6 +5,7 @@ import com.junho.config.security.token.TokenResponse;
 import com.junho.homepage.member.dto.request.SignInRequest;
 import com.junho.homepage.member.dto.request.SignUpRequest;
 import com.junho.homepage.member.service.MemberService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+@Api(tags = "인증 API")
 @RestController
 @RequiredArgsConstructor
 public class LoginController {

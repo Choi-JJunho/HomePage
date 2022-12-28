@@ -2,6 +2,7 @@ package com.junho.homepage.member.controller;
 
 import com.junho.homepage.member.dto.response.MemberResponse;
 import com.junho.homepage.member.service.MemberService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Api(tags = "회원 API")
 @RestController
 @RequiredArgsConstructor
 public class MemberController {

@@ -10,6 +10,7 @@ import com.junho.homepage.member.Member;
 import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.ApiException;
 import com.junho.utils.AuthUtils;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
 
+@Api(tags = "게시물 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/article")
