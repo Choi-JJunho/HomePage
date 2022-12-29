@@ -1,9 +1,4 @@
-DROP TABLE IF EXISTS `member`;
-DROP TABLE IF EXISTS authority;
-DROP TABLE IF EXISTS board;
-DROP TABLE IF EXISTS article;
-
-CREATE TABLE `member`
+CREATE TABLE IF NOT EXISTS `member`
 (
     id            BIGINT AUTO_INCREMENT NOT NULL,
     account       VARCHAR(255) UNIQUE   NULL,
@@ -16,7 +11,7 @@ CREATE TABLE `member`
     CONSTRAINT pk_member PRIMARY KEY (id)
 );
 
-CREATE TABLE authority
+CREATE TABLE IF NOT EXISTS authority
 (
     id        BIGINT AUTO_INCREMENT NOT NULL,
     name      VARCHAR(255)          NULL,
@@ -24,7 +19,7 @@ CREATE TABLE authority
     CONSTRAINT pk_authority PRIMARY KEY (id)
 );
 
-CREATE TABLE board
+CREATE TABLE IF NOT EXISTS board
 (
     id            BIGINT AUTO_INCREMENT NOT NULL,
     title         VARCHAR(255)          NULL,
@@ -37,7 +32,7 @@ CREATE TABLE board
     CONSTRAINT pk_board PRIMARY KEY (id)
 );
 
-CREATE TABLE article
+CREATE TABLE IF NOT EXISTS article
 (
     id            BIGINT AUTO_INCREMENT NOT NULL,
     title         VARCHAR(255)          NULL,
@@ -52,7 +47,7 @@ CREATE TABLE article
     CONSTRAINT pk_article PRIMARY KEY (id)
 );
 
-CREATE TABLE `comment`
+CREATE TABLE IF NOT EXISTS `comment`
 (
     id            BIGINT AUTO_INCREMENT NOT NULL,
     `description` VARCHAR(255)          NULL,

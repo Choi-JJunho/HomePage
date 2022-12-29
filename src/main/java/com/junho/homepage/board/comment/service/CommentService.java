@@ -24,6 +24,7 @@ public class CommentService {
     private final ArticleRepository articleRepository;
 
     public List<CommentResponse> getCommentsByArticleId(Long articleId) {
+        
         List<Comment> comments = commentRepository.findByArticle_Id(articleId)
                 .orElseThrow(() -> new ApiException(ErrorCode.BOARD_NOT_EXIST));
 
@@ -57,12 +58,20 @@ public class CommentService {
         return true;
     }
 
-    public CommentResponse modifyComment(Comment comment, CreateComment request) {
+    public CommentResponse modifyComment(Long id, CreateComment request) {
+
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new ApiException(ErrorCode.COMMENT_NOT_EXIST));
+
         comment.update(request);
         return CommentMapper.INSTANCE.toCommentResponse(comment);
     }
 
-    public boolean deleteComment(Comment comment) {
+    public boolean deleteComment(Long id) {
+
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new ApiException(ErrorCode.COMMENT_NOT_EXIST));
+
         comment.setEnabled(false);
         return true;
     }

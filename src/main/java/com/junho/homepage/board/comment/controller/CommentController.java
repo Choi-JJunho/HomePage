@@ -1,13 +1,10 @@
 package com.junho.homepage.board.comment.controller;
 
 import com.junho.annotation.RoleUser;
-import com.junho.homepage.board.comment.Comment;
 import com.junho.homepage.board.comment.dto.request.CreateComment;
 import com.junho.homepage.board.comment.dto.response.CommentResponse;
 import com.junho.homepage.board.comment.repository.CommentRepository;
 import com.junho.homepage.board.comment.service.CommentService;
-import com.junho.support.error.ErrorCode;
-import com.junho.support.exception.ApiException;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,6 +28,7 @@ public class CommentController {
     @RoleUser
     @PostMapping("/post")
     public ResponseEntity<Boolean> post(CreateComment request) {
+
         return new ResponseEntity<>(commentService.postComment(request), HttpStatus.OK);
     }
 
@@ -38,20 +36,14 @@ public class CommentController {
     @PutMapping("/{id}")
     public ResponseEntity<CommentResponse> modify(@PathVariable Long id, CreateComment request) {
 
-        Comment comment = commentRepository.findById(id)
-                .orElseThrow(() -> new ApiException(ErrorCode.COMMENT_NOT_EXIST));
-
-        return new ResponseEntity<>(commentService.modifyComment(comment, request), HttpStatus.OK);
+        return new ResponseEntity<>(commentService.modifyComment(id, request), HttpStatus.OK);
     }
 
     @RoleUser
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable Long id) {
 
-        Comment comment = commentRepository.findById(id)
-                .orElseThrow(() -> new ApiException(ErrorCode.COMMENT_NOT_EXIST));
-
-        return new ResponseEntity<>(commentService.deleteComment(comment), HttpStatus.OK);
+        return new ResponseEntity<>(commentService.deleteComment(id), HttpStatus.OK);
     }
 
 }

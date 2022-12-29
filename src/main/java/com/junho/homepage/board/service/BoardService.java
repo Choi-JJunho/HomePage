@@ -20,6 +20,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     public List<BoardResponse> getBoards() {
+        
         List<Board> boards = boardRepository.findAll();
         return boards.stream()
                 .map(BoardMapper.INSTANCE::toBoardResponse)
@@ -27,6 +28,7 @@ public class BoardService {
     }
 
     public Boolean createBoard(CreateBoard request) {
+
         if (boardRepository.findByTitle(request.getTitle()).isPresent()) {
             throw new ApiException(ErrorCode.BOARD_ALREADY_EXIST);
         }
@@ -37,12 +39,20 @@ public class BoardService {
         return true;
     }
 
-    public BoardResponse updateBoard(Board board, CreateBoard request) {
+    public BoardResponse updateBoard(Long id, CreateBoard request) {
+
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new ApiException(ErrorCode.BOARD_NOT_EXIST));
+
         board.update(request);
         return BoardMapper.INSTANCE.toBoardResponse(board);
     }
 
-    public Boolean deleteBoard(Board board) {
+    public Boolean deleteBoard(Long id) {
+
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new ApiException(ErrorCode.ARTICLE_NOT_EXIST));
+
         board.setEnabled(false);
         return true;
     }

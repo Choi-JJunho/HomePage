@@ -7,13 +7,17 @@ import com.junho.homepage.board.article.dto.response.ArticleResponse;
 import com.junho.homepage.board.article.repository.ArticleMapper;
 import com.junho.homepage.board.article.repository.ArticleRepository;
 import com.junho.homepage.board.repository.BoardRepository;
+import com.junho.homepage.member.Member;
 import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.ApiException;
+import com.junho.utils.AuthUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -45,12 +49,26 @@ public class ArticleService {
         return ArticleMapper.INSTANCE.toArticleResponse(article);
     }
 
-    public ArticleResponse updateArticle(Article article, CreateArticle request) {
+    public ArticleResponse updateArticle(Long id, CreateArticle request) {
+
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new ApiException(ErrorCode.ARTICLE_NOT_EXIST));
+
         article.update(request);
         return ArticleMapper.INSTANCE.toArticleResponse(article);
     }
 
-    public boolean deleteArticle(Article article) {
+    public boolean deleteArticle(Long id) {
+
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new ApiException(ErrorCode.ARTICLE_NOT_EXIST));
+
+        Member currentMember = AuthUtils.getCurrentMember();
+
+        if (!Objects.equals(currentMember.getId(), article.getCreator().getId())) {
+            throw new ApiException(ErrorCode.AUTHORIZATION_INVALID);
+        }
+        
         article.setEnabled(false);
         return true;
     }

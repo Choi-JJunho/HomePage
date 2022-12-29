@@ -1,15 +1,12 @@
 package com.junho.homepage.board.controller;
 
 import com.junho.annotation.RoleAdmin;
-import com.junho.homepage.board.Board;
 import com.junho.homepage.board.article.dto.response.ArticleResponse;
 import com.junho.homepage.board.article.service.ArticleService;
 import com.junho.homepage.board.dto.request.CreateBoard;
 import com.junho.homepage.board.dto.response.BoardResponse;
 import com.junho.homepage.board.repository.BoardRepository;
 import com.junho.homepage.board.service.BoardService;
-import com.junho.support.error.ErrorCode;
-import com.junho.support.exception.ApiException;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -40,11 +37,13 @@ public class BoardController {
 
     @GetMapping("/list")
     public ResponseEntity<List<BoardResponse>> list() {
+        
         return new ResponseEntity<>(boardService.getBoards(), HttpStatus.OK);
     }
 
     @GetMapping("/{boardId}/list")
     public ResponseEntity<Page<ArticleResponse>> list(@PathVariable Long boardId, String keyword, @PageableDefault Pageable pageable) {
+
         return new ResponseEntity<>(articleService.getArticles(boardId, keyword, pageable), HttpStatus.OK);
     }
 
@@ -59,19 +58,13 @@ public class BoardController {
     @PutMapping("/{id}")
     public ResponseEntity<BoardResponse> update(@PathVariable Long id, @RequestBody CreateBoard request) {
 
-        Board board = boardRepository.findById(id)
-                .orElseThrow(() -> new ApiException(ErrorCode.BOARD_NOT_EXIST));
-
-        return new ResponseEntity<>(boardService.updateBoard(board, request), HttpStatus.OK);
+        return new ResponseEntity<>(boardService.updateBoard(id, request), HttpStatus.OK);
     }
 
     @RoleAdmin
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable Long id) {
 
-        Board board = boardRepository.findById(id)
-                .orElseThrow(() -> new ApiException(ErrorCode.ARTICLE_NOT_EXIST));
-
-        return new ResponseEntity<>(boardService.deleteBoard(board), HttpStatus.OK);
+        return new ResponseEntity<>(boardService.deleteBoard(id), HttpStatus.OK);
     }
 }

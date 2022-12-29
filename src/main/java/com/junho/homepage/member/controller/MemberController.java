@@ -22,11 +22,13 @@ public class MemberController {
 
     @GetMapping("/users")
     public ResponseEntity<Page<MemberResponse>> getUsers(String keyword, @PageableDefault Pageable pageable) {
+
         return new ResponseEntity<>(memberService.getMembers(keyword, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/user")
     public ResponseEntity<MemberResponse> getUser(@RequestParam String name) {
+        
         return new ResponseEntity<>(memberService.getMember(name), HttpStatus.OK);
     }
 }
