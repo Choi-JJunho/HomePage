@@ -46,4 +46,24 @@ public class ArticleRepositoryExtensionImpl extends CustomQueryDslSupport implem
 
         return new PageImpl<>(response, pageable, page.getTotalElements());
     }
+
+
+    @Override
+    public Page<ArticleResponse> findAll(String keyword, Pageable pageable) {
+
+        JPAQuery<Article> query = queryFactory
+                .select(article)
+                .from(article)
+                .where(
+                        find(keyword, article.title, article.description)
+                );
+
+        Page<Article> page = page(query, pageable);
+
+        List<ArticleResponse> response = page.stream()
+                .map(ArticleMapper.INSTANCE::toArticleResponse)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(response, pageable, page.getTotalElements());
+    }
 }

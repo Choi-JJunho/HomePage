@@ -30,11 +30,11 @@ public class ArticleResponse {
     @ApiModelProperty(notes = "게시물 내용", example = "게시글의 내용입니다.")
     private String description;
 
-    @ApiModelProperty(notes = "생성일자", example = "2020.12.15 12:11")
+    @ApiModelProperty(notes = "생성일자", example = "2020-12-15 12:11")
     private LocalDateTime createDate;
 
-    @ApiModelProperty(notes = "수정일자", example = "2020.12.15 12:11")
+    @ApiModelProperty(notes = "수정일자", example = "2020-12-15 12:11")
     private LocalDateTime updateDate;
 
-    // TODO : 댓글 ArticleResponse에 포함시킬건지?
+    // TODO : 댓글을 ArticleResponse에 포함시킬건지? 별도의 API 호출로 부르게 할것인지?
 }

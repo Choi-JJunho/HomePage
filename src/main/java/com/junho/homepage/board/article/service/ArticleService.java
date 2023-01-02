@@ -68,12 +68,16 @@ public class ArticleService {
         if (!Objects.equals(currentMember.getId(), article.getCreator().getId())) {
             throw new ApiException(ErrorCode.AUTHORIZATION_INVALID);
         }
-        
+
         article.setEnabled(false);
         return true;
     }
 
     public Page<ArticleResponse> getArticles(Long boardId, String keyword, Pageable pageable) {
         return articleRepository.findAll(boardId, keyword, pageable);
+    }
+
+    public Page<ArticleResponse> getArticles(String keyword, Pageable pageable) {
+        return articleRepository.findAll(keyword, pageable);
     }
 }
