@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS board
 (
     id            BIGINT AUTO_INCREMENT NOT NULL,
     title         VARCHAR(255)          NULL,
-    `description` VARCHAR(255)          NULL,
+    `description` TEXT                  NULL,
     create_date   datetime              NULL,
     update_date   datetime              NULL,
     creator_id    BIGINT                NULL,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS article
 (
     id            BIGINT AUTO_INCREMENT NOT NULL,
     title         VARCHAR(255)          NULL,
-    `description` VARCHAR(255)          NULL,
+    `description` TEXT                  NULL,
     hits          INT                   NULL,
     board_id      BIGINT                NULL, # FK
     create_date   datetime              NULL,
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS article
 CREATE TABLE IF NOT EXISTS `comment`
 (
     id            BIGINT AUTO_INCREMENT NOT NULL,
-    `description` VARCHAR(255)          NULL,
+    `description` TEXT                  NULL,
     article_id    BIGINT                NULL, # FK
     parent_id     BIGINT                NULL,
     depth         BIGINT                NULL,
