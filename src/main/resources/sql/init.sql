@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS article
     id            BIGINT AUTO_INCREMENT NOT NULL,
     title         VARCHAR(255)          NULL,
     `description` TEXT                  NULL,
-    hits          INT                   NULL,
+    hits          INT        DEFAULT 0  NOT NULL,
     board_id      BIGINT                NULL, # FK
     create_date   datetime              NULL,
     update_date   datetime              NULL,
