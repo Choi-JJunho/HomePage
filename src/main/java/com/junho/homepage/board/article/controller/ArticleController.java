@@ -3,7 +3,6 @@ package com.junho.homepage.board.article.controller;
 import com.junho.annotation.RoleUser;
 import com.junho.homepage.board.article.dto.request.CreateArticle;
 import com.junho.homepage.board.article.dto.response.ArticleResponse;
-import com.junho.homepage.board.article.repository.ArticleRepository;
 import com.junho.homepage.board.article.service.ArticleService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -29,11 +28,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class ArticleController {
 
     private final ArticleService articleService;
-    private final ArticleRepository articleRepository;
 
     @GetMapping("/list")
     public ResponseEntity<Page<ArticleResponse>> list(String keyword, @PageableDefault(sort = "createDate", direction = Sort.Direction.DESC) Pageable pageable) {
         return new ResponseEntity<>(articleService.getArticles(keyword, pageable), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/{boardId}/list")
+    public ResponseEntity<Page<ArticleResponse>> list(@PathVariable Long boardId, String keyword, @PageableDefault Pageable pageable) {
+
+        return new ResponseEntity<>(articleService.getArticles(boardId, keyword, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -57,7 +62,7 @@ public class ArticleController {
     }
 
     @RoleUser
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable Long id) {
 
         return new ResponseEntity<>(articleService.deleteArticle(id), HttpStatus.OK);

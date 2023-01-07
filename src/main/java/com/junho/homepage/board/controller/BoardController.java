@@ -1,17 +1,11 @@
 package com.junho.homepage.board.controller;
 
 import com.junho.annotation.RoleAdmin;
-import com.junho.homepage.board.article.dto.response.ArticleResponse;
-import com.junho.homepage.board.article.service.ArticleService;
 import com.junho.homepage.board.dto.request.CreateBoard;
 import com.junho.homepage.board.dto.response.BoardResponse;
-import com.junho.homepage.board.repository.BoardRepository;
 import com.junho.homepage.board.service.BoardService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,19 +26,11 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
-    private final BoardRepository boardRepository;
-    private final ArticleService articleService;
 
     @GetMapping("/list")
     public ResponseEntity<List<BoardResponse>> list() {
-        
+
         return new ResponseEntity<>(boardService.getBoards(), HttpStatus.OK);
-    }
-
-    @GetMapping("/{boardId}/list")
-    public ResponseEntity<Page<ArticleResponse>> list(@PathVariable Long boardId, String keyword, @PageableDefault Pageable pageable) {
-
-        return new ResponseEntity<>(articleService.getArticles(boardId, keyword, pageable), HttpStatus.OK);
     }
 
     @RoleAdmin

@@ -9,11 +9,10 @@ import com.junho.homepage.board.comment.repository.CommentRepository;
 import com.junho.support.error.ErrorCode;
 import com.junho.support.exception.ApiException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,14 +22,9 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final ArticleRepository articleRepository;
 
-    public List<CommentResponse> getCommentsByArticleId(Long articleId) {
-        
-        List<Comment> comments = commentRepository.findByArticle_Id(articleId)
-                .orElseThrow(() -> new ApiException(ErrorCode.BOARD_NOT_EXIST));
+    public Page<CommentResponse> getComments(Long articleId, String keyword, Pageable pageable) {
 
-        return comments.stream()
-                .map(CommentMapper.INSTANCE::toCommentResponse)
-                .collect(Collectors.toList());
+        return commentRepository.getComments(articleId, keyword, pageable);
     }
 
     public boolean postComment(CreateComment request) {
