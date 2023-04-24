@@ -22,7 +22,7 @@ public class MemberController {
 
     @GetMapping("/users")
     public ResponseEntity<Page<MemberResponse>> getUsers(String keyword, @PageableDefault Pageable pageable) {
-
+        String hello = "hello";
         return new ResponseEntity<>(memberService.getMembers(keyword, pageable), HttpStatus.OK);
     }
 

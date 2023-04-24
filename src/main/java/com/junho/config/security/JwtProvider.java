@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @RequiredArgsConstructor
@@ -31,11 +32,10 @@ public class JwtProvider {
     private final JpaUserDetailsService userDetailsService;
 
     // 만료시간 : 1Hour
-    // TODO : Millisecond 시간을 Hour로 보기 편하게 선언하는 방식?
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000L * 60 * 60 * 60;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = TimeUnit.HOURS.toMillis(1);
 
     // Bearer 검증
-    private static final String BEARER = "BEARER ";
+    private static final String BEARER_PREFIX = "BEARER ";
 
     @Value("${jwt.secret.key}")
     private String salt;
@@ -65,7 +65,11 @@ public class JwtProvider {
 
     public String getAccount(String token) {
         try {
-            return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getSubject();
+            return Jwts.parserBuilder()
+                    .setSigningKey(secretKey).build()
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
         } catch (ExpiredJwtException e) {
             return e.getClaims().getSubject();
         }
@@ -77,10 +81,10 @@ public class JwtProvider {
 
     public boolean isValidToken(String token) {
         try {
-            if (StringUtils.isBlank(token) || !token.toUpperCase().startsWith(BEARER)) {
+            if (StringUtils.isBlank(token) || !token.toUpperCase().startsWith(BEARER_PREFIX)) {
                 return false;
             }
-            String refined = token.substring(BEARER.length());
+            String refined = token.substring(BEARER_PREFIX.length());
             Jws<Claims> claims = Jwts.parserBuilder()
                     .setSigningKey(secretKey)
                     .build()

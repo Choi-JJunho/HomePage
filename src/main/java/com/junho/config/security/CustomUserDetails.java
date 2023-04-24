@@ -16,10 +16,6 @@ public class CustomUserDetails implements UserDetails {
         this.member = member;
     }
 
-    public final Member getMember() {
-        return member;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return member.getRoles().stream()
@@ -55,5 +51,9 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public final Member getMember() {
+        return member;
     }
 }

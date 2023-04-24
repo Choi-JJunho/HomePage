@@ -31,8 +31,6 @@ public enum ErrorCode {
 
 
     /* 00 서비스 관련 오류  -300 ~ -399*/
-
-
     private final int code;
     private final HttpStatus httpStatus;
     private final String message;

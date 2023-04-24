@@ -41,12 +41,6 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         }
     }
 
-    private void setErrorMessage(HttpServletResponse response, ErrorCode errorCode) throws IOException {
-        response.setContentType("application/json;charset=UTF-8");
-        response.setStatus(errorCode.getHttpStatus().value());
-        response.getWriter().write(makeErrorMessage(errorCode));
-    }
-
     private String makeErrorMessage(ErrorCode errorCode) throws JsonProcessingException {
         return objectMapper.writeValueAsString(
                 ErrorResponse.builder()
@@ -55,5 +49,11 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
                         .message(errorCode.getMessage())
                         .build()
         );
+    }
+
+    private void setErrorMessage(HttpServletResponse response, ErrorCode errorCode) throws IOException {
+        response.setContentType("application/json;charset=UTF-8");
+        response.setStatus(errorCode.getHttpStatus().value());
+        response.getWriter().write(makeErrorMessage(errorCode));
     }
 }

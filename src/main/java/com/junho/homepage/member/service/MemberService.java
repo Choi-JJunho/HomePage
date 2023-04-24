@@ -30,6 +30,7 @@ import java.util.Collections;
 public class MemberService {
 
     private static final String tokenWhiteList = "tokenWhiteList";
+    
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
     private final RefreshTokenRepository refreshTokenRepository;

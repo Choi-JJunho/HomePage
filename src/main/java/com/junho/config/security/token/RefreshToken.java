@@ -18,11 +18,11 @@ import java.util.concurrent.TimeUnit;
 public class RefreshToken {
 
     @Id
-    String id;
-    String token;
+    private String id;
+    private String token;
 
     @TimeToLive(unit = TimeUnit.DAYS)
-    Integer expire_time;
+    private Integer expire_time;
 
     public static RefreshToken of(String account, String token) {
         return RefreshToken.builder()
@@ -31,5 +31,4 @@ public class RefreshToken {
                 .expire_time(3) // TTL 3 Days
                 .build();
     }
-
 }
