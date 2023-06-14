@@ -3,12 +3,11 @@
 spring.mvc.pathmatch.matching-strategy: ant_path_matcher
 
 spring:
-
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: 12345678
-    url: jdbc:mysql://localhost:3306/homepage?characterEncoding=utf8&useUnicode=true&mysqlEncoding=utf8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Seoul
+    url: jdbc:h2:mem:testdb;MODE=MySQL
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
 
   jpa:
     show-sql: true
